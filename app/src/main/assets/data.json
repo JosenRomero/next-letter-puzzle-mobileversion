@@ -1,0 +1,26 @@
+[
+  {
+    "topic": "Frutas",
+    "letters": ["a", "e", "i", "k", "m", "n", "p", "r", "w", "z"],
+    "answer": ["pera", "manzana", "kiwi"],
+    "valid_answer": []
+  },
+  {
+    "topic": "Colores",
+    "letters": ["a", "b", "c", "i", "l", "m", "n", "o", "r", "s"],
+    "answer": ["amarillo", "rosa", "blanco"],
+    "valid_answer": []
+  },
+  {
+    "topic": "Animales",
+    "letters": ["a", "c", "e", "f", "g", "i", "o", "p", "r", "t"],
+    "answer": ["tigre", "foca", "pato"],
+    "valid_answer": ["gato", "perro"]
+  },
+  {
+    "topic": "Números",
+    "letters": ["a", "c", "e", "i", "n", "o", "r", "s", "t", "u"],
+    "answer": ["cuatro", "cinco", "seis", "siete", "uno"],
+    "valid_answer": ["tres"]
+  }
+]
