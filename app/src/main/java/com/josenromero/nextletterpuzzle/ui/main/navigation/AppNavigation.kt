@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.views.HomeScreen
+import com.josenromero.nextletterpuzzle.ui.main.views.PlayScreen
 
 @Composable
 fun AppNavigation() {
@@ -14,6 +15,9 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
             HomeScreen()
+        }
+        composable(route = AppScreens.PlayScreen.route) {
+            PlayScreen()
         }
     }
 
