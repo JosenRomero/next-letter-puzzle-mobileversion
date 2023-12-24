@@ -9,6 +9,6 @@ import com.josenromero.nextletterpuzzle.utils.Constants
 data class PlayerEntity(
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo (name = "name") val name: String,
-    @ColumnInfo (name = "currentLevel") val currentLevel: Number,
-    @ColumnInfo (name = "achievements") val achievements: ArrayList<String>
+    @ColumnInfo (name = "currentLevel") val currentLevel: Int,
+    @ColumnInfo (name = "achievements") var achievements: List<String> = emptyList()
 )
