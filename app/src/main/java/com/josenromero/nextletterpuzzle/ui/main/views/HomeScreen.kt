@@ -1,20 +1,50 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.josenromero.nextletterpuzzle.data.Item
+import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
+import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 
 @Composable
 fun HomeScreen(
-    players: List<PlayerEntity>,
-    data: List<Item>
+    onNavigateToAScreen: (route: String) -> Unit,
+    players: List<PlayerEntity>
 ) {
 
-    Text(text = "HomeScreen")
+    Scaffold {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                OutlinedButton(
+                    onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) }
+                ) {
+                    Text(text = "Play")
+                }
+            }
+        }
+    }
 
 }
 
@@ -24,8 +54,8 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     NextLetterPuzzleTheme {
         HomeScreen(
-            players = emptyList(),
-            data = emptyList()
+            onNavigateToAScreen = {},
+            players = emptyList()
         )
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.viewmodels.GameViewModel
 import com.josenromero.nextletterpuzzle.ui.main.views.HomeScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.PlayScreen
+import com.josenromero.nextletterpuzzle.utils.Constants
 
 @Composable
 fun AppNavigation() {
@@ -18,12 +19,15 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
             HomeScreen(
-                players = gameViewModel.players.value,
-                data = gameViewModel.data.value
+                onNavigateToAScreen = {  route -> navController.navigate(route) },
+                players = gameViewModel.players.value
             )
         }
         composable(route = AppScreens.PlayScreen.route) {
-            PlayScreen()
+            PlayScreen(
+                data = gameViewModel.data.value,
+                player = Constants.playerFake
+            )
         }
     }
 
