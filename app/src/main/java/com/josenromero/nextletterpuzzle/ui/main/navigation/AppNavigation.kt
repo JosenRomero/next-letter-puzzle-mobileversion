@@ -25,8 +25,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.PlayScreen.route) {
             PlayScreen(
-                data = gameViewModel.data.value,
-                player = Constants.playerFake
+                currentData = gameViewModel.data.value[0],
+                player = Constants.playerFake,
+                checkAnswer = {}
             )
         }
     }

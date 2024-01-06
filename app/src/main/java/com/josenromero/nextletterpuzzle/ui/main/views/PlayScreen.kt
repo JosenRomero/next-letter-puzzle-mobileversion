@@ -4,12 +4,23 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.data.Item
@@ -20,9 +31,13 @@ import com.josenromero.nextletterpuzzle.utils.Constants
 
 @Composable
 fun PlayScreen(
-    data: List<Item>,
-    player: PlayerEntity
+    currentData: Item,
+    player: PlayerEntity,
+    checkAnswer: (words: List<String>) -> Unit
 ) {
+
+    val currentWord = remember { mutableStateOf("") }
+    val words = remember { mutableStateListOf<String>() }
 
     Scaffold {
         Box(
@@ -33,14 +48,61 @@ fun PlayScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp),
+                    .padding(20.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ButtonsContainer(
-                    letters = data[player.currentLevel].letters,
-                    onClick = {}
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Level: ${player.currentLevel}")
+                    Text(text = "Word: ${words.size+1}/${currentData.answer.size}")
+                }
+                Divider(modifier = Modifier.padding(0.dp, 15.dp))
+                Text(
+                    text = currentData.topic,
+                    textAlign = TextAlign.Center
                 )
+                Divider(modifier = Modifier.padding(0.dp, 15.dp))
+                Spacer(modifier = Modifier.height(50.dp))
+                ButtonsContainer(
+                    letters = currentData.letters,
+                    onClick = { letter ->
+                        currentWord.value += letter
+                    }
+                )
+                Spacer(modifier = Modifier.height(50.dp))
+                Text(
+                    text = currentWord.value,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(50.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = {
+                        if(currentWord.value.isNotEmpty()) {
+                            currentWord.value = currentWord.value.substring(0, currentWord.value.length -1)
+                        }
+                    }) {
+                        Text(text = "x")
+                    }
+                    Button(onClick = {
+                        words.add(currentWord.value)
+                        currentWord.value = ""
+                        if (words.size == currentData.answer.size) {
+                            checkAnswer(words)
+                        }
+                    }) {
+                        if ((words.size+1) < currentData.answer.size) {
+                            Text(text = "Next Word")
+                        } else {
+                            Text(text = "Check Answer")
+                        }
+                    }
+                }
             }
         }
     }
@@ -53,8 +115,9 @@ fun PlayScreen(
 fun PlayScreenPreview() {
     NextLetterPuzzleTheme {
         PlayScreen(
-            data = Constants.dataFake,
-            player = Constants.playerFake
+            currentData = Constants.dataFake[0],
+            player = Constants.playerFake,
+            checkAnswer = {}
         )
     }
 }
