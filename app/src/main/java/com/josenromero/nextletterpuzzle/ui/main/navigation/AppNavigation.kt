@@ -8,7 +8,6 @@ import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.viewmodels.GameViewModel
 import com.josenromero.nextletterpuzzle.ui.main.views.HomeScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.PlayScreen
-import com.josenromero.nextletterpuzzle.utils.Constants
 
 @Composable
 fun AppNavigation() {
@@ -25,8 +24,9 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.PlayScreen.route) {
             PlayScreen(
-                currentData = gameViewModel.data.value[0],
-                player = Constants.playerFake,
+                currentData = gameViewModel.data.value[gameViewModel.players.value[0].currentLevel-1],
+                player = gameViewModel.players.value[0],
+                isLoading = gameViewModel.isLoadingPlayer.value,
                 checkAnswer = {}
             )
         }

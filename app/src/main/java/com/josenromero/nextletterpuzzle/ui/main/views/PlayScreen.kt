@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
+import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
@@ -33,6 +34,7 @@ import com.josenromero.nextletterpuzzle.utils.Constants
 fun PlayScreen(
     currentData: Item,
     player: PlayerEntity,
+    isLoading: Boolean,
     checkAnswer: (words: List<String>) -> Unit
 ) {
 
@@ -52,54 +54,65 @@ fun PlayScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Level: ${player.currentLevel}")
-                    Text(text = "Word: ${words.size+1}/${currentData.answer.size}")
-                }
-                Divider(modifier = Modifier.padding(0.dp, 15.dp))
-                Text(
-                    text = currentData.topic,
-                    textAlign = TextAlign.Center
-                )
-                Divider(modifier = Modifier.padding(0.dp, 15.dp))
-                Spacer(modifier = Modifier.height(50.dp))
-                ButtonsContainer(
-                    letters = currentData.letters,
-                    onClick = { letter ->
-                        currentWord.value += letter
+                if (isLoading) {
+                    Loading()
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Level: ${player.currentLevel}")
+                        Text(text = "Word: ${words.size + 1}/${currentData.answer.size}")
                     }
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                Text(
-                    text = currentWord.value,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Button(onClick = {
-                        if(currentWord.value.isNotEmpty()) {
-                            currentWord.value = currentWord.value.substring(0, currentWord.value.length -1)
+                    Divider(modifier = Modifier.padding(0.dp, 15.dp))
+                    Text(
+                        text = currentData.topic,
+                        textAlign = TextAlign.Center
+                    )
+                    Divider(modifier = Modifier.padding(0.dp, 15.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
+                    ButtonsContainer(
+                        letters = currentData.letters,
+                        onClick = { letter ->
+                            currentWord.value += letter
                         }
-                    }) {
-                        Text(text = "x")
-                    }
-                    Button(onClick = {
-                        words.add(currentWord.value)
-                        currentWord.value = ""
-                        if (words.size == currentData.answer.size) {
-                            checkAnswer(words)
+                    )
+                    Spacer(modifier = Modifier.height(50.dp))
+                    Text(
+                        text = currentWord.value,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(50.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Button(
+                            onClick = {
+                                if (currentWord.value.isNotEmpty()) {
+                                    currentWord.value =
+                                        currentWord.value.substring(0, currentWord.value.length - 1)
+                                }
+                            },
+                            enabled = currentWord.value.isNotEmpty()
+                        ) {
+                            Text(text = "x")
                         }
-                    }) {
-                        if ((words.size+1) < currentData.answer.size) {
-                            Text(text = "Next Word")
-                        } else {
-                            Text(text = "Check Answer")
+                        Button(
+                            onClick = {
+                                words.add(currentWord.value)
+                                currentWord.value = ""
+                                if (words.size == currentData.answer.size) {
+                                    checkAnswer(words)
+                                }
+                            },
+                            enabled = currentWord.value.isNotEmpty()
+                        ) {
+                            if ((words.size + 1) < currentData.answer.size) {
+                                Text(text = "Next Word")
+                            } else {
+                                Text(text = "Check Answer")
+                            }
                         }
                     }
                 }
@@ -117,6 +130,7 @@ fun PlayScreenPreview() {
         PlayScreen(
             currentData = Constants.dataFake[0],
             player = Constants.playerFake,
+            isLoading = false,
             checkAnswer = {}
         )
     }

@@ -28,6 +28,8 @@ class GameViewModel @Inject constructor(
     val players: State<List<PlayerEntity>> get() = _players
     private val _data: MutableState<List<Item>> = mutableStateOf(emptyList())
     val data: State<List<Item>> get() = _data
+    private val _isLoadingPlayer: MutableState<Boolean> = mutableStateOf(true)
+    val isLoadingPlayer: State<Boolean> get() = _isLoadingPlayer
 
     init {
         getAllData()
@@ -36,7 +38,6 @@ class GameViewModel @Inject constructor(
 
     private fun getAllData() {
         _data.value = getData(context, "data.json")
-        println("My data: $data")
     }
 
     private fun getAllPlayers() {
@@ -46,6 +47,11 @@ class GameViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 _players.value = allPlayers
+                if(allPlayers.isEmpty()) {
+                    createPlayer(PlayerEntity(0, "userDefault", 1))
+                } else {
+                    _isLoadingPlayer.value = false
+                }
             }
 
         }
@@ -54,6 +60,7 @@ class GameViewModel @Inject constructor(
     fun createPlayer(player: PlayerEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             addOnePlayer(player)
+            getAllPlayers()
         }
     }
 
