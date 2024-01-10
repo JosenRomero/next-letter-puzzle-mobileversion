@@ -15,9 +15,11 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -25,8 +27,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
+import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.Loading
+import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
@@ -40,6 +44,7 @@ fun PlayScreen(
 
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
+    var isOpenDialog by remember { mutableStateOf(false) }
 
     Scaffold {
         Box(
@@ -104,6 +109,7 @@ fun PlayScreen(
                                 currentWord.value = ""
                                 if (words.size == currentData.answer.size) {
                                     checkAnswer(words)
+                                    isOpenDialog = true
                                 }
                             },
                             enabled = currentWord.value.isNotEmpty()
@@ -114,6 +120,16 @@ fun PlayScreen(
                                 Text(text = "Check Answer")
                             }
                         }
+                    }
+                }
+                if(isOpenDialog) {
+                    AnimatedTransitionDialog(onDismissRequest = { isOpenDialog = false }) {
+                        ResultContainer(
+                            win = true,
+                            onNavigateToHomeScreen = {},
+                            nextLevelBtn = {},
+                            tryAgainBtn = {}
+                        )
                     }
                 }
             }
