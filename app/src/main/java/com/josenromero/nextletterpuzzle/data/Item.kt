@@ -6,5 +6,5 @@ data class Item (
     @SerializedName("topic") val topic: String,
     @SerializedName("letters") val letters: ArrayList<String>,
     @SerializedName("answer") val answer: ArrayList<String>,
-    @SerializedName("validAnswer") val validAnswer: ArrayList<String>
+    @SerializedName("valid_answer") val validAnswer: ArrayList<String>
 )

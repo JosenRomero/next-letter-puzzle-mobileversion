@@ -26,8 +26,7 @@ fun AppNavigation() {
             PlayScreen(
                 currentData = gameViewModel.data.value[gameViewModel.players.value[0].currentLevel-1],
                 player = gameViewModel.players.value[0],
-                isLoading = gameViewModel.isLoadingPlayer.value,
-                checkAnswer = {}
+                isLoading = gameViewModel.isLoadingPlayer.value
             )
         }
     }

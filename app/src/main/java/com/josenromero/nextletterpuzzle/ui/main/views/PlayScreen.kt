@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,18 +34,20 @@ import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
+import com.josenromero.nextletterpuzzle.utils.checkWords
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayScreen(
     currentData: Item,
     player: PlayerEntity,
-    isLoading: Boolean,
-    checkAnswer: (words: List<String>) -> Unit
+    isLoading: Boolean
 ) {
 
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
+    val arrResult = remember { mutableStateListOf<String>() }
 
     Scaffold {
         Box(
@@ -108,7 +111,8 @@ fun PlayScreen(
                                 words.add(currentWord.value)
                                 currentWord.value = ""
                                 if (words.size == currentData.answer.size) {
-                                    checkAnswer(words)
+                                    val res: List<String> = checkWords(currentData.answer, currentData.validAnswer, words)
+                                    arrResult.addAll(res)
                                     isOpenDialog = true
                                 }
                             },
@@ -125,7 +129,8 @@ fun PlayScreen(
                 if(isOpenDialog) {
                     AnimatedTransitionDialog(onDismissRequest = { isOpenDialog = false }) {
                         ResultContainer(
-                            win = true,
+                            win = !arrResult.contains("x"),
+                            arr = arrResult,
                             onNavigateToHomeScreen = {},
                             nextLevelBtn = {},
                             tryAgainBtn = {}
@@ -146,8 +151,7 @@ fun PlayScreenPreview() {
         PlayScreen(
             currentData = Constants.dataFake[0],
             player = Constants.playerFake,
-            isLoading = false,
-            checkAnswer = {}
+            isLoading = false
         )
     }
 }
