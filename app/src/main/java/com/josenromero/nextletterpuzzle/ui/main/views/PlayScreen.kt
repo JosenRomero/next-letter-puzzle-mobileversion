@@ -32,6 +32,7 @@ import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
+import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 import com.josenromero.nextletterpuzzle.utils.checkWords
@@ -41,7 +42,9 @@ import com.josenromero.nextletterpuzzle.utils.checkWords
 fun PlayScreen(
     currentData: Item,
     player: PlayerEntity,
-    isLoading: Boolean
+    isLoading: Boolean,
+    onNavigateToAScreen: (route: String) -> Unit,
+    nextLevelBtn: (player: PlayerEntity) -> Unit
 ) {
 
     val currentWord = remember { mutableStateOf("") }
@@ -131,9 +134,9 @@ fun PlayScreen(
                         ResultContainer(
                             win = !arrResult.contains("x"),
                             arr = arrResult,
-                            onNavigateToHomeScreen = {},
-                            nextLevelBtn = {},
-                            tryAgainBtn = {}
+                            onNavigateToHomeScreen = { onNavigateToAScreen(AppScreens.HomeScreen.route) },
+                            nextLevelBtn = { nextLevelBtn(player) },
+                            tryAgainBtn = { onNavigateToAScreen(AppScreens.PlayScreen.route) }
                         )
                     }
                 }
@@ -151,7 +154,9 @@ fun PlayScreenPreview() {
         PlayScreen(
             currentData = Constants.dataFake[0],
             player = Constants.playerFake,
-            isLoading = false
+            isLoading = false,
+            onNavigateToAScreen = {},
+            nextLevelBtn = {}
         )
     }
 }

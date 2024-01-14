@@ -10,6 +10,7 @@ import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.domain.player.AddOnePlayer
 import com.josenromero.nextletterpuzzle.domain.player.GetPlayers
+import com.josenromero.nextletterpuzzle.domain.player.UpdateOnePlayer
 import com.josenromero.nextletterpuzzle.utils.getData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor(
     private val context: Application,
     private val getPlayers: GetPlayers,
-    private val addOnePlayer: AddOnePlayer
+    private val addOnePlayer: AddOnePlayer,
+    private val updateOnePlayer: UpdateOnePlayer
 ): ViewModel() {
 
     private val _players: MutableState<List<PlayerEntity>> = mutableStateOf(emptyList())
@@ -60,6 +62,15 @@ class GameViewModel @Inject constructor(
     fun createPlayer(player: PlayerEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             addOnePlayer(player)
+            getAllPlayers()
+        }
+    }
+
+    fun updatePlayer(player: PlayerEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val nextLevel = player.currentLevel + 1
+            val newValue = PlayerEntity(player.uid, player.name, nextLevel, player.achievements)
+            updateOnePlayer(newValue)
             getAllPlayers()
         }
     }
