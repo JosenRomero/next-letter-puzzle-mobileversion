@@ -73,7 +73,7 @@ fun PlayScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = "Level: ${player.currentLevel}")
-                        Text(text = "Word: ${words.size + 1}/${currentData.answer.size}")
+                        Text(text = "Word: ${words.size}/${currentData.answer.size}")
                     }
                     Divider(modifier = Modifier.padding(0.dp, 15.dp))
                     Text(
@@ -129,8 +129,8 @@ fun PlayScreen(
                         }
                     }
                 }
-                if(isOpenDialog) {
-                    AnimatedTransitionDialog(onDismissRequest = { isOpenDialog = false }) {
+                if (isOpenDialog) {
+                    AnimatedTransitionDialog(onDismissRequest = { }) {
                         ResultContainer(
                             win = !arrResult.contains("x"),
                             arr = arrResult,
