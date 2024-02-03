@@ -43,6 +43,7 @@ fun PlayScreen(
     currentData: Item,
     player: PlayerEntity,
     isLoading: Boolean,
+    lastLevel: Boolean,
     onNavigateToAScreen: (route: String) -> Unit,
     nextLevelBtn: (player: PlayerEntity) -> Unit
 ) {
@@ -133,6 +134,7 @@ fun PlayScreen(
                     AnimatedTransitionDialog(onDismissRequest = { }) {
                         ResultContainer(
                             win = !arrResult.contains("x"),
+                            lastLevel = lastLevel,
                             arr = arrResult,
                             onNavigateToHomeScreen = { onNavigateToAScreen(AppScreens.HomeScreen.route) },
                             nextLevelBtn = { nextLevelBtn(player) },
@@ -155,6 +157,7 @@ fun PlayScreenPreview() {
             currentData = Constants.dataFake[0],
             player = Constants.playerFake,
             isLoading = false,
+            lastLevel = false,
             onNavigateToAScreen = {},
             nextLevelBtn = {}
         )

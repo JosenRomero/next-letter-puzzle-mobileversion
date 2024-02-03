@@ -29,6 +29,7 @@ import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 @Composable
 fun ResultContainer(
     win: Boolean,
+    lastLevel: Boolean,
     arr: List<String>,
     onNavigateToHomeScreen: () -> Unit,
     nextLevelBtn: () -> Unit,
@@ -62,20 +63,32 @@ fun ResultContainer(
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
+        if (lastLevel && win) {
+            Text(
+                text = "You have completed all levels. Congratulations!",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(15.dp))
             Button(onClick = { onNavigateToHomeScreen() }) {
                 Text(text = "Menu")
             }
-            if (win) {
-                Button(onClick = { nextLevelBtn() }) {
-                    Text(text = "Next Level")
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Button(onClick = { onNavigateToHomeScreen() }) {
+                    Text(text = "Menu")
                 }
-            } else {
-                Button(onClick = { tryAgainBtn() }) {
-                    Text(text = "Try Again")
+                if (win) {
+                    Button(onClick = { nextLevelBtn() }) {
+                        Text(text = "Next Level")
+                    }
+                } else {
+                    Button(onClick = { tryAgainBtn() }) {
+                        Text(text = "Try Again")
+                    }
                 }
             }
         }
@@ -90,6 +103,7 @@ fun WinContainerPreview() {
     NextLetterPuzzleTheme {
         ResultContainer(
             win = true,
+            lastLevel = false,
             arr = arrayListOf("o", "x", "x"),
             onNavigateToHomeScreen = {},
             nextLevelBtn = {},

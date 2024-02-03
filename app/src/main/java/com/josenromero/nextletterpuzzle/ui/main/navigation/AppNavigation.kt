@@ -27,6 +27,7 @@ fun AppNavigation() {
                 currentData = gameViewModel.data.value[gameViewModel.players.value[0].currentLevel-1],
                 player = gameViewModel.players.value[0],
                 isLoading = gameViewModel.isLoadingPlayer.value,
+                lastLevel = gameViewModel.data.value.size == gameViewModel.players.value[0].currentLevel,
                 onNavigateToAScreen = { route -> navController.navigate(route)},
                 nextLevelBtn = { player ->
                     gameViewModel.updatePlayer(player)
