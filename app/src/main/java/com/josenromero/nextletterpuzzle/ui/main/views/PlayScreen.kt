@@ -40,13 +40,21 @@ import com.josenromero.nextletterpuzzle.utils.checkWords
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayScreen(
-    currentData: Item,
+    data: List<Item>,
     player: PlayerEntity,
     isLoading: Boolean,
     lastLevel: Boolean,
     onNavigateToAScreen: (route: String) -> Unit,
-    nextLevelBtn: (player: PlayerEntity) -> Unit
+    nextLevelBtn: (player: PlayerEntity) -> Unit,
+    lastLevelCompleteBtn: (player: PlayerEntity) -> Unit
 ) {
+
+    var currentData: Item? = null
+
+    if(player.currentLevel <= Constants.lastLevel) {
+        currentData = data[player.currentLevel-1]
+    }
+
 
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
@@ -68,7 +76,8 @@ fun PlayScreen(
             ) {
                 if (isLoading) {
                     Loading()
-                } else {
+                }
+                if(currentData != null && !isLoading) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -117,7 +126,11 @@ fun PlayScreen(
                                 if (words.size == currentData.answer.size) {
                                     val res: List<String> = checkWords(currentData.answer, currentData.validAnswer, words)
                                     arrResult.addAll(res)
-                                    isOpenDialog = true
+                                    if(lastLevel && !arrResult.contains("x")) {
+                                        lastLevelCompleteBtn(player)
+                                    } else {
+                                        isOpenDialog = true
+                                    }
                                 }
                             },
                             enabled = currentWord.value.isNotEmpty()
@@ -134,7 +147,6 @@ fun PlayScreen(
                     AnimatedTransitionDialog(onDismissRequest = { }) {
                         ResultContainer(
                             win = !arrResult.contains("x"),
-                            lastLevel = lastLevel,
                             arr = arrResult,
                             onNavigateToHomeScreen = { onNavigateToAScreen(AppScreens.HomeScreen.route) },
                             nextLevelBtn = { nextLevelBtn(player) },
@@ -154,12 +166,13 @@ fun PlayScreen(
 fun PlayScreenPreview() {
     NextLetterPuzzleTheme {
         PlayScreen(
-            currentData = Constants.dataFake[0],
+            data = Constants.dataFake,
             player = Constants.playerFake,
             isLoading = false,
             lastLevel = false,
             onNavigateToAScreen = {},
-            nextLevelBtn = {}
+            nextLevelBtn = {},
+            lastLevelCompleteBtn = {}
         )
     }
 }
