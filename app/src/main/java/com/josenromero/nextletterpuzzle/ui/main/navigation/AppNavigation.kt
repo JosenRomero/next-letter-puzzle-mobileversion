@@ -1,5 +1,7 @@
 package com.josenromero.nextletterpuzzle.ui.main.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -18,13 +20,41 @@ fun AppNavigation() {
     val gameViewModel: GameViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
-        composable(route = AppScreens.HomeScreen.route) {
+        composable(
+            route = AppScreens.HomeScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            }
+        ) {
             HomeScreen(
                 onNavigateToAScreen = {  route -> navController.navigate(route) },
                 players = gameViewModel.players.value
             )
         }
-        composable(route = AppScreens.PlayScreen.route) {
+        composable(
+            route = AppScreens.PlayScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            }
+        ) {
             PlayScreen(
                 data = gameViewModel.data.value,
                 player = gameViewModel.players.value[0],
@@ -41,7 +71,21 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(route = AppScreens.EndScreen.route) {
+        composable(
+            route = AppScreens.EndScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1500)
+                )
+            }
+        ) {
             EndScreen(
                 onNavigateToHomeScreen = {
                     navController.navigate(AppScreens.HomeScreen.route)

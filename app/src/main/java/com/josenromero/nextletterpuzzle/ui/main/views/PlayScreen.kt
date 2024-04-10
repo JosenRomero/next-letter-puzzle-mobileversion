@@ -148,9 +148,20 @@ fun PlayScreen(
                         ResultContainer(
                             win = !arrResult.contains("x"),
                             arr = arrResult,
-                            onNavigateToHomeScreen = { onNavigateToAScreen(AppScreens.HomeScreen.route) },
-                            nextLevelBtn = { nextLevelBtn(player) },
-                            tryAgainBtn = { onNavigateToAScreen(AppScreens.PlayScreen.route) }
+                            onNavigateToHomeScreen = {
+                                isOpenDialog = false
+                                onNavigateToAScreen(AppScreens.HomeScreen.route)
+                            },
+                            nextLevelBtn = {
+                                isOpenDialog = false
+                                nextLevelBtn(player)
+                            },
+                            tryAgainBtn = {
+                                isOpenDialog = false
+                                currentWord.value = ""
+                                words.clear()
+                                arrResult.clear()
+                            }
                         )
                     }
                 }
