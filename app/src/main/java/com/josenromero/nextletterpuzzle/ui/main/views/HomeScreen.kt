@@ -1,12 +1,15 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
@@ -20,8 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.BottomSheet
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
@@ -50,6 +55,36 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.icon),
+                    contentDescription = "logo",
+                    modifier = Modifier.size(200.dp)
+                )
+                HorizontalDivider(
+                    Modifier.height(30.dp),
+                    color = Color.Transparent
+                )
+                Row {
+                    Image(
+                        painter = painterResource(id = R.drawable.title_s1),
+                        contentDescription = "title part1",
+                        modifier = Modifier.size(100.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.title_s2),
+                        contentDescription = "title part2",
+                        modifier = Modifier.size(100.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.title_s3),
+                        contentDescription = "title part3",
+                        modifier = Modifier.size(100.dp)
+                    )
+                }
+                HorizontalDivider(
+                    Modifier.height(30.dp),
+                    color = Color.Transparent
+                )
                 if(players.isNotEmpty() && players[0].currentLevel <= Constants.lastLevel) {
                     OutlinedButton(
                         onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) }
