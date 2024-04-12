@@ -1,9 +1,10 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,12 @@ import com.josenromero.nextletterpuzzle.ui.components.Achievement
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
+data class SimpleAchievement(
+    val imgId: Int,
+    val title: String,
+    val goal: String,
+    val completed: Int
+)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AchievementsScreen(
@@ -33,6 +40,12 @@ fun AchievementsScreen(
 ) {
 
     val currentLevel = player.currentLevel
+
+    val simpleAchievements: List<SimpleAchievement> = listOf(
+        SimpleAchievement(R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
+        SimpleAchievement(R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18),
+        SimpleAchievement(R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24)
+    )
 
     Scaffold(
         topBar = {
@@ -59,30 +72,20 @@ fun AchievementsScreen(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(10.dp, 30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Achievement(
-                    imgId = R.drawable.achievement_easy,
-                    title = "Fácil",
-                    goal = "Completa 7 niveles",
-                    completed = currentLevel > 7
-                )
-                Achievement(
-                    imgId = R.drawable.achievement_normal,
-                    title = "Normal",
-                    goal = "Completa 18 niveles",
-                    completed = currentLevel > 18
-                )
-                Achievement(
-                    imgId = R.drawable.achievement_hard,
-                    title = "Difícil",
-                    goal = "Completa 24 niveles",
-                    completed = currentLevel > 24
-                )
+                items(simpleAchievements) { achievement ->
+                    Achievement(
+                        imgId = achievement.imgId,
+                        title = achievement.title,
+                        goal = achievement.goal,
+                        completed = currentLevel > achievement.completed
+                    )
+                }
             }
         }
     }
