@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.viewmodels.GameViewModel
+import com.josenromero.nextletterpuzzle.ui.main.views.AchievementsScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.EndScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.HomeScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.PlayScreen
@@ -23,16 +24,36 @@ fun AppNavigation() {
         composable(
             route = AppScreens.HomeScreen.route,
             enterTransition = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(1500)
-                )
+                when (initialState.destination.route) {
+                    AppScreens.PlayScreen.route,
+                    AppScreens.EndScreen.route ->
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(1500)
+                        )
+                    AppScreens.AchievementsScreen.route ->
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                            animationSpec = tween(1500)
+                        )
+                    else -> null
+                }
             },
             exitTransition = {
-                slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(1500)
-                )
+                when (targetState.destination.route) {
+                    AppScreens.PlayScreen.route ->
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(1500)
+                        )
+                    AppScreens.AchievementsScreen.route ->
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                            animationSpec = tween(1500)
+                        )
+
+                    else -> null
+                }
             }
         ) {
             HomeScreen(
@@ -69,6 +90,26 @@ fun AppNavigation() {
                     gameViewModel.updatePlayer(player)
                     navController.navigate(AppScreens.EndScreen.route)
                 }
+            )
+        }
+        composable(
+            route = AppScreens.AchievementsScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(1500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(1500)
+                )
+            }
+        ) {
+            AchievementsScreen(
+                player = gameViewModel.players.value[0],
+                onNavigateToBack = { navController.popBackStack() }
             )
         }
         composable(

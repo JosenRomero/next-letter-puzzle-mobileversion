@@ -96,6 +96,15 @@ fun HomeScreen(
                     Modifier.height(10.dp),
                     color = Color.Transparent
                 )
+                OutlinedButton(
+                    onClick = { onNavigateToAScreen(AppScreens.AchievementsScreen.route) }
+                ) {
+                    Text(text = "Logros")
+                }
+                HorizontalDivider(
+                    Modifier.height(10.dp),
+                    color = Color.Transparent
+                )
                 OutlinedButton(onClick = { showBottomSheet = true }) {
                     Text(text = "Instrucciones")
                 }
