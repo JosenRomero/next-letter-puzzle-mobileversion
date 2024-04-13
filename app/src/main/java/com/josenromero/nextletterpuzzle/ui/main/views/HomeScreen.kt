@@ -56,9 +56,9 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.icon),
+                    painter = painterResource(id = R.drawable.logo),
                     contentDescription = "logo",
-                    modifier = Modifier.size(200.dp)
+                    modifier = Modifier.size(300.dp)
                 )
                 HorizontalDivider(
                     Modifier.height(30.dp),
