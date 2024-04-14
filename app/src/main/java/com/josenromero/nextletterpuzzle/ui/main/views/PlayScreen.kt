@@ -30,6 +30,7 @@ import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
+import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
@@ -60,6 +61,7 @@ fun PlayScreen(
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
     val arrResult = remember { mutableStateListOf<String>() }
+    val currentProgressBar = remember { mutableStateOf(0) }
 
     Scaffold {
         Box(
@@ -91,6 +93,7 @@ fun PlayScreen(
                         textAlign = TextAlign.Center
                     )
                     Divider(modifier = Modifier.padding(0.dp, 15.dp))
+                    LinearIndicator(number = currentProgressBar.value)
                     Spacer(modifier = Modifier.height(50.dp))
                     ButtonsContainer(
                         letters = currentData.letters,
@@ -123,6 +126,7 @@ fun PlayScreen(
                             onClick = {
                                 words.add(currentWord.value)
                                 currentWord.value = ""
+                                currentProgressBar.value = (100/currentData.answer.size) * words.size
                                 if (words.size == currentData.answer.size) {
                                     val res: List<String> = checkWords(currentData.answer, currentData.validAnswer, words)
                                     arrResult.addAll(res)
@@ -161,6 +165,7 @@ fun PlayScreen(
                                 currentWord.value = ""
                                 words.clear()
                                 arrResult.clear()
+                                currentProgressBar.value = 0
                             }
                         )
                     }
