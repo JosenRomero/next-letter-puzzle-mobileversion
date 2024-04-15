@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +36,6 @@ import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 import com.josenromero.nextletterpuzzle.utils.checkWords
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlayScreen(
     data: List<Item>,
@@ -55,7 +52,6 @@ fun PlayScreen(
     if(player.currentLevel <= Constants.lastLevel) {
         currentData = data[player.currentLevel-1]
     }
-
 
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
@@ -76,9 +72,6 @@ fun PlayScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (isLoading) {
-                    Loading()
-                }
                 if(currentData != null && !isLoading) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -87,21 +80,18 @@ fun PlayScreen(
                         Text(text = "Level: ${player.currentLevel}")
                         Text(text = "Word: ${words.size}/${currentData.answer.size}")
                     }
-                    Divider(modifier = Modifier.padding(0.dp, 15.dp))
                     Text(
                         text = currentData.topic,
+                        modifier = Modifier.padding(vertical = 15.dp),
                         textAlign = TextAlign.Center
                     )
-                    Divider(modifier = Modifier.padding(0.dp, 15.dp))
                     LinearIndicator(number = currentProgressBar.value)
-                    Spacer(modifier = Modifier.height(50.dp))
                     ButtonsContainer(
                         letters = currentData.letters,
                         onClick = { letter ->
                             currentWord.value += letter
                         }
                     )
-                    Spacer(modifier = Modifier.height(50.dp))
                     Text(
                         text = currentWord.value,
                         textAlign = TextAlign.Center
@@ -146,7 +136,10 @@ fun PlayScreen(
                             }
                         }
                     }
+                } else {
+                    Loading()
                 }
+
                 if (isOpenDialog) {
                     AnimatedTransitionDialog(onDismissRequest = { }) {
                         ResultContainer(

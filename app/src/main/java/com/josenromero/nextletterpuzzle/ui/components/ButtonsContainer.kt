@@ -22,7 +22,8 @@ fun ButtonsContainer(
 ) {
 
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 70.dp)
+        columns = GridCells.Adaptive(minSize = 70.dp),
+        modifier = Modifier.padding(vertical = 50.dp)
     ) {
         itemsIndexed(letters) {_, letter ->
             OutlinedButton(
