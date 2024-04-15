@@ -31,6 +31,7 @@ import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
+import com.josenromero.nextletterpuzzle.ui.components.WordsList
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
@@ -56,6 +57,7 @@ fun PlayScreen(
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
+    var showWordsList by remember { mutableStateOf(false) }
     val arrResult = remember { mutableStateListOf<String>() }
     val currentProgressBar = remember { mutableStateOf(0) }
 
@@ -69,7 +71,6 @@ fun PlayScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(20.dp),
-                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if(currentData != null && !isLoading) {
@@ -136,6 +137,12 @@ fun PlayScreen(
                             }
                         }
                     }
+                    Button(
+                        onClick = { showWordsList = !showWordsList },
+                        modifier = Modifier.padding(top = 20.dp)
+                    ) {
+                        Text(text = if(showWordsList) "Ocultar lista de palabras" else "Ver lista de palabras" )
+                    }
                 } else {
                     Loading()
                 }
@@ -163,6 +170,10 @@ fun PlayScreen(
                         )
                     }
                 }
+                WordsList(
+                    words = words,
+                    visible = showWordsList
+                )
             }
         }
     }
