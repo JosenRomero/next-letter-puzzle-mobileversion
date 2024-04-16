@@ -32,6 +32,7 @@ import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
+import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 import com.josenromero.nextletterpuzzle.ui.components.WordsList
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
@@ -65,7 +66,16 @@ fun PlayScreen(
 
     val achievement = checkAchievementUnlocked(currentLevel = player.currentLevel)
 
-    Scaffold {
+    Scaffold(
+        topBar = {
+            SimpleTopAppBar(
+                title = "",
+                onNavigateToAScreen = {
+                    onNavigateToAScreen(AppScreens.HomeScreen.route)
+                }
+            )
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
