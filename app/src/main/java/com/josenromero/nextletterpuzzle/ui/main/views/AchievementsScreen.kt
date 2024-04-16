@@ -20,18 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.Achievement
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
-data class SimpleAchievement(
-    val imgId: Int,
-    val title: String,
-    val goal: String,
-    val completed: Int
-)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AchievementsScreen(
@@ -40,12 +33,6 @@ fun AchievementsScreen(
 ) {
 
     val currentLevel = player.currentLevel
-
-    val simpleAchievements: List<SimpleAchievement> = listOf(
-        SimpleAchievement(R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
-        SimpleAchievement(R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18),
-        SimpleAchievement(R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24)
-    )
 
     Scaffold(
         topBar = {
@@ -78,7 +65,7 @@ fun AchievementsScreen(
                     .padding(10.dp, 30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(simpleAchievements) { achievement ->
+                items(Constants.simpleAchievements) { achievement ->
                     Achievement(
                         imgId = achievement.imgId,
                         title = achievement.title,
