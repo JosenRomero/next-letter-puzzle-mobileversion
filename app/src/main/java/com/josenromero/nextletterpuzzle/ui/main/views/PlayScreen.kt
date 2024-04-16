@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
+import com.josenromero.nextletterpuzzle.ui.components.AchievementUnlocked
 import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
@@ -35,6 +36,7 @@ import com.josenromero.nextletterpuzzle.ui.components.WordsList
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
+import com.josenromero.nextletterpuzzle.utils.checkAchievementUnlocked
 import com.josenromero.nextletterpuzzle.utils.checkWords
 
 @Composable
@@ -61,6 +63,8 @@ fun PlayScreen(
     val arrResult = remember { mutableStateListOf<String>() }
     val currentProgressBar = remember { mutableStateOf(0) }
 
+    val achievement = checkAchievementUnlocked(currentLevel = player.currentLevel)
+
     Scaffold {
         Box(
             modifier = Modifier
@@ -74,6 +78,9 @@ fun PlayScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if(currentData != null && !isLoading) {
+                    if(achievement != null) {
+                        AchievementUnlocked(text = "Logro desbloqueado: ${achievement.title}")
+                    }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
