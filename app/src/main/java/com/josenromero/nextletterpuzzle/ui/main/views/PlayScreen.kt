@@ -171,11 +171,15 @@ fun PlayScreen(
                             arr = arrResult,
                             onNavigateToHomeScreen = {
                                 isOpenDialog = false
+                                if(!arrResult.contains("x")) {
+                                    nextLevelBtn(player)
+                                }
                                 onNavigateToAScreen(AppScreens.HomeScreen.route)
                             },
                             nextLevelBtn = {
                                 isOpenDialog = false
                                 nextLevelBtn(player)
+                                onNavigateToAScreen(AppScreens.PlayScreen.route)
                             },
                             tryAgainBtn = {
                                 isOpenDialog = false

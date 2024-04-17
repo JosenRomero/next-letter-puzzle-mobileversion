@@ -84,7 +84,6 @@ fun AppNavigation() {
                 onNavigateToAScreen = { route -> navController.navigate(route)},
                 nextLevelBtn = { player ->
                     gameViewModel.updatePlayer(player)
-                    navController.navigate(AppScreens.PlayScreen.route)
                 },
                 lastLevelCompleteBtn = { player ->
                     gameViewModel.updatePlayer(player)
