@@ -5,7 +5,7 @@ import com.josenromero.nextletterpuzzle.data.AchievementAboutLevel
 fun checkAchievementUnlocked(currentLevel: Int): AchievementAboutLevel? {
 
     return Constants.achievementsAboutLevel.find { achievement ->
-        (achievement.completed + 1) == currentLevel
+        (achievement.completedLevel + 1) == currentLevel
     }
 
 }

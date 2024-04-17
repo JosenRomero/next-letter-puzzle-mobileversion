@@ -49,7 +49,7 @@ fun AchievementsScreen(
                         imgId = achievement.imgId,
                         title = achievement.title,
                         goal = achievement.goal,
-                        completed = currentLevel > achievement.completed
+                        completed = currentLevel > achievement.completedLevel
                     )
                 }
             }
