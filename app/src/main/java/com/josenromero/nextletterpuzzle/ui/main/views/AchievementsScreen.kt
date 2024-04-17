@@ -44,7 +44,7 @@ fun AchievementsScreen(
                     .padding(10.dp, 30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(Constants.simpleAchievements) { achievement ->
+                items(Constants.achievementsAboutLevel) { achievement ->
                     Achievement(
                         imgId = achievement.imgId,
                         title = achievement.title,

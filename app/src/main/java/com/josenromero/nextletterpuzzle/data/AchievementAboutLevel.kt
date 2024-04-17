@@ -1,6 +1,6 @@
 package com.josenromero.nextletterpuzzle.data
 
-data class SimpleAchievement(
+data class AchievementAboutLevel(
     val imgId: Int,
     val title: String,
     val goal: String,

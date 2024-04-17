@@ -1,10 +1,10 @@
 package com.josenromero.nextletterpuzzle.utils
 
-import com.josenromero.nextletterpuzzle.data.SimpleAchievement
+import com.josenromero.nextletterpuzzle.data.AchievementAboutLevel
 
-fun checkAchievementUnlocked(currentLevel: Int): SimpleAchievement? {
+fun checkAchievementUnlocked(currentLevel: Int): AchievementAboutLevel? {
 
-    return Constants.simpleAchievements.find { achievement ->
+    return Constants.achievementsAboutLevel.find { achievement ->
         (achievement.completed + 1) == currentLevel
     }
 

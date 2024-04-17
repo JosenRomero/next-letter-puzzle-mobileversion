@@ -2,7 +2,7 @@ package com.josenromero.nextletterpuzzle.utils
 
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.Item
-import com.josenromero.nextletterpuzzle.data.SimpleAchievement
+import com.josenromero.nextletterpuzzle.data.AchievementAboutLevel
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 
 object Constants {
@@ -10,10 +10,10 @@ object Constants {
     const val player_database = "player_database"
     const val player_table = "player_table"
 
-    val simpleAchievements: List<SimpleAchievement> = listOf(
-        SimpleAchievement(R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
-        SimpleAchievement(R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18),
-        SimpleAchievement(R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24)
+    val achievementsAboutLevel: List<AchievementAboutLevel> = listOf(
+        AchievementAboutLevel(R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
+        AchievementAboutLevel(R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18),
+        AchievementAboutLevel(R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24)
     )
 
     var playerFake = PlayerEntity(0, "Jose Romero", 1, emptyList())
