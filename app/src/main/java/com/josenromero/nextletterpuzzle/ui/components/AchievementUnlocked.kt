@@ -26,23 +26,32 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
+import com.josenromero.nextletterpuzzle.utils.Constants
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun AchievementUnlocked(
-    text: String
+    text: String,
+    player: PlayerEntity,
+    achievementId: String,
+    saveAchievement: (player: PlayerEntity, achievementId: String) -> Unit
 ) {
 
     val visible = remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = Unit) {
         launch {
-            delay(3000)
-            visible.value = true
-            delay(5000)
-            visible.value = false
+            val isSaved = player.achievements.contains(achievementId)
+            if(!isSaved) {
+                saveAchievement(player, achievementId)
+                delay(2000)
+                visible.value = true
+                delay(2000)
+                visible.value = false
+            }
         }
     }
 
@@ -82,7 +91,10 @@ fun AchievementUnlocked(
 fun AchievementUnlockedPreview() {
     NextLetterPuzzleTheme {
         AchievementUnlocked(
-            text = "Logro desbloqueado"
+            text = "Logro desbloqueado",
+            player = Constants.playerFake,
+            achievementId = "1",
+            saveAchievement = { _, _ -> }
         )
     }
 }

@@ -88,6 +88,9 @@ fun AppNavigation() {
                 lastLevelCompleteBtn = { player ->
                     gameViewModel.updatePlayer(player)
                     navController.navigate(AppScreens.EndScreen.route)
+                },
+                saveAchievement = { player, achievementId ->
+                    gameViewModel.saveAchievement(player, achievementId)
                 }
             )
         }

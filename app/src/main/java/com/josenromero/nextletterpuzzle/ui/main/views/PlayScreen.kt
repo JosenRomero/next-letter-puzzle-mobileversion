@@ -48,7 +48,8 @@ fun PlayScreen(
     lastLevel: Boolean,
     onNavigateToAScreen: (route: String) -> Unit,
     nextLevelBtn: (player: PlayerEntity) -> Unit,
-    lastLevelCompleteBtn: (player: PlayerEntity) -> Unit
+    lastLevelCompleteBtn: (player: PlayerEntity) -> Unit,
+    saveAchievement: (player: PlayerEntity, achievementId: String) -> Unit
 ) {
 
     var currentData: Item? = null
@@ -88,8 +89,14 @@ fun PlayScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if(currentData != null && !isLoading) {
+
                     if(achievement != null) {
-                        AchievementUnlocked(text = "Logro desbloqueado: ${achievement.title}")
+                        AchievementUnlocked(
+                            text = "Logro desbloqueado: ${achievement.title}",
+                            player = player,
+                            achievementId = achievement.id,
+                            saveAchievement = saveAchievement
+                        )
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -213,7 +220,8 @@ fun PlayScreenPreview() {
             lastLevel = false,
             onNavigateToAScreen = {},
             nextLevelBtn = {},
-            lastLevelCompleteBtn = {}
+            lastLevelCompleteBtn = {},
+            saveAchievement = { _, _ ->  }
         )
     }
 }

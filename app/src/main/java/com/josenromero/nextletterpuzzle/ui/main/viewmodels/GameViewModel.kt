@@ -75,4 +75,13 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    fun saveAchievement(player: PlayerEntity, achievement: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val achievements = player.achievements.plus(achievement)
+            val newValue = PlayerEntity(player.uid, player.name, player.currentLevel, achievements)
+            updateOnePlayer(newValue)
+            getAllPlayers()
+        }
+    }
+
 }
