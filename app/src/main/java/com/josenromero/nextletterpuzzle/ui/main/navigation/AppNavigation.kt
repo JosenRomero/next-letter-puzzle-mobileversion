@@ -25,7 +25,11 @@ fun AppNavigation() {
             route = AppScreens.HomeScreen.route,
             enterTransition = {
                 when (initialState.destination.route) {
-                    AppScreens.PlayScreen.route,
+                    AppScreens.PlayScreen.route ->
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(1500)
+                        )
                     AppScreens.EndScreen.route ->
                         slideIntoContainer(
                             towards = AnimatedContentTransitionScope.SlideDirection.Left,
@@ -70,10 +74,19 @@ fun AppNavigation() {
                 )
             },
             exitTransition = {
-                slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(1500)
-                )
+                when (targetState.destination.route) {
+                    AppScreens.PlayScreen.route ->
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(1500)
+                        )
+                    AppScreens.HomeScreen.route ->
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(1500)
+                        )
+                    else -> null
+                }
             }
         ) {
             PlayScreen(
