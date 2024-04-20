@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -107,7 +107,7 @@ fun PlayScreen(
                     }
                     Text(
                         text = currentData.topic,
-                        modifier = Modifier.padding(vertical = 15.dp),
+                        modifier = Modifier.padding(vertical = 50.dp),
                         textAlign = TextAlign.Center
                     )
                     LinearIndicator(number = currentProgressBar.value)
@@ -119,23 +119,24 @@ fun PlayScreen(
                     )
                     Text(
                         text = currentWord.value,
+                        modifier = Modifier.padding(bottom = 50.dp),
                         textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(50.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Button(
+                        OutlinedButton(
                             onClick = {
                                 if (currentWord.value.isNotEmpty()) {
                                     currentWord.value =
                                         currentWord.value.substring(0, currentWord.value.length - 1)
                                 }
                             },
-                            enabled = currentWord.value.isNotEmpty()
+                            enabled = currentWord.value.isNotEmpty(),
+                            shape = MaterialTheme.shapes.small
                         ) {
-                            Text(text = "x")
+                            Text(text = "Eliminar letra")
                         }
                         Button(
                             onClick = {
@@ -152,18 +153,20 @@ fun PlayScreen(
                                     }
                                 }
                             },
-                            enabled = currentWord.value.isNotEmpty()
+                            enabled = currentWord.value.isNotEmpty(),
+                            shape = MaterialTheme.shapes.small
                         ) {
                             if ((words.size + 1) < currentData.answer.size) {
-                                Text(text = "Next Word")
+                                Text(text = "Siguiente palabra")
                             } else {
-                                Text(text = "Check Answer")
+                                Text(text = "Comprobar")
                             }
                         }
                     }
                     Button(
                         onClick = { showWordsList = !showWordsList },
-                        modifier = Modifier.padding(top = 20.dp)
+                        modifier = Modifier.padding(top = 30.dp),
+                        shape = MaterialTheme.shapes.small
                     ) {
                         Text(text = if(showWordsList) "Ocultar lista de palabras" else "Ver lista de palabras" )
                     }
