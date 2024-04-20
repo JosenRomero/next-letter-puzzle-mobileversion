@@ -1,17 +1,22 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,7 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +38,6 @@ import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onNavigateToAScreen: (route: String) -> Unit,
@@ -41,6 +45,18 @@ fun HomeScreen(
 ) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+
+    val dy by infiniteTransition.animateFloat(
+        initialValue = -100f,
+        targetValue = 100f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(500, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "logo animation"
+    )
 
     Scaffold {
         Box(
@@ -58,13 +74,14 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "logo",
-                    modifier = Modifier.size(300.dp)
+                    modifier = Modifier
+                        .graphicsLayer(
+                            translationY = dy
+                        )
                 )
-                HorizontalDivider(
-                    Modifier.height(30.dp),
-                    color = Color.Transparent
-                )
-                Row {
+                Row(
+                    modifier = Modifier.padding(bottom = 30.dp)
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.title_s1),
                         contentDescription = "title part1",
@@ -81,31 +98,25 @@ fun HomeScreen(
                         modifier = Modifier.size(100.dp)
                     )
                 }
-                HorizontalDivider(
-                    Modifier.height(30.dp),
-                    color = Color.Transparent
-                )
                 if(players.isNotEmpty() && players[0].currentLevel <= Constants.lastLevel) {
-                    OutlinedButton(
-                        onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) }
+                    Button(
+                        onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
+                        shape = MaterialTheme.shapes.small
                     ) {
                         Text(text = "Play")
                     }
                 }
-                HorizontalDivider(
-                    Modifier.height(10.dp),
-                    color = Color.Transparent
-                )
                 OutlinedButton(
-                    onClick = { onNavigateToAScreen(AppScreens.AchievementsScreen.route) }
+                    onClick = { onNavigateToAScreen(AppScreens.AchievementsScreen.route) },
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    shape = MaterialTheme.shapes.small
                 ) {
                     Text(text = "Logros")
                 }
-                HorizontalDivider(
-                    Modifier.height(10.dp),
-                    color = Color.Transparent
-                )
-                OutlinedButton(onClick = { showBottomSheet = true }) {
+                OutlinedButton(
+                    onClick = { showBottomSheet = true },
+                    shape = MaterialTheme.shapes.small
+                ) {
                     Text(text = "Instrucciones")
                 }
                 if(showBottomSheet) {
