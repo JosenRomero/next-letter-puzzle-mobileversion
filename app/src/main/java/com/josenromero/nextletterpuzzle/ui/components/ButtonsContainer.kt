@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +26,7 @@ fun ButtonsContainer(
         modifier = Modifier.padding(vertical = 50.dp)
     ) {
         itemsIndexed(letters) {_, letter ->
-            OutlinedButton(
+            Button(
                 onClick = { onClick(letter) },
                 modifier = Modifier.padding(5.dp),
                 shape = ShapeDefaults.Small
