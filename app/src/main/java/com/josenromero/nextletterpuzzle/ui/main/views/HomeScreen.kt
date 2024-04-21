@@ -119,6 +119,13 @@ fun HomeScreen(
                 ) {
                     Text(text = "Instrucciones")
                 }
+                OutlinedButton(
+                    onClick = { onNavigateToAScreen(AppScreens.AboutScreen.route) },
+                    modifier = Modifier.padding(top = 10.dp),
+                    shape = MaterialTheme.shapes.small
+                ) {
+                    Text(text = "About")
+                }
                 if(showBottomSheet) {
                     BottomSheet(
                         onDismiss = { showBottomSheet = false },

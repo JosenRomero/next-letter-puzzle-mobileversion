@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.viewmodels.GameViewModel
+import com.josenromero.nextletterpuzzle.ui.main.views.AboutScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.AchievementsScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.EndScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.HomeScreen
@@ -35,7 +36,8 @@ fun AppNavigation() {
                             towards = AnimatedContentTransitionScope.SlideDirection.Left,
                             animationSpec = tween(1500)
                         )
-                    AppScreens.AchievementsScreen.route ->
+                    AppScreens.AchievementsScreen.route,
+                    AppScreens.AboutScreen.route ->
                         slideIntoContainer(
                             towards = AnimatedContentTransitionScope.SlideDirection.Down,
                             animationSpec = tween(1500)
@@ -50,7 +52,8 @@ fun AppNavigation() {
                             towards = AnimatedContentTransitionScope.SlideDirection.Left,
                             animationSpec = tween(1500)
                         )
-                    AppScreens.AchievementsScreen.route ->
+                    AppScreens.AchievementsScreen.route,
+                    AppScreens.AboutScreen.route ->
                         slideOutOfContainer(
                             towards = AnimatedContentTransitionScope.SlideDirection.Up,
                             animationSpec = tween(1500)
@@ -146,6 +149,25 @@ fun AppNavigation() {
                 onNavigateToHomeScreen = {
                     navController.navigate(AppScreens.HomeScreen.route)
                 }
+            )
+        }
+        composable(
+            route = AppScreens.AboutScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                    animationSpec = tween(1500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                    animationSpec = tween(1500)
+                )
+            }
+        ) {
+            AboutScreen(
+                onNavigateToBack = { navController.popBackStack() }
             )
         }
     }
