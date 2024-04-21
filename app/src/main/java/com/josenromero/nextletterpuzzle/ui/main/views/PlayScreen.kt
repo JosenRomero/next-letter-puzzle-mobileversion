@@ -31,6 +31,7 @@ import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.AchievementUnlocked
 import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
+import com.josenromero.nextletterpuzzle.ui.components.IndicatorItem
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
@@ -107,19 +108,26 @@ fun PlayScreen(
                                     saveAchievement = saveAchievement
                                 )
                             }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(text = "Level: ${player.currentLevel}")
-                                Text(text = "Word: ${words.size}/${currentData.answer.size}")
-                            }
+                            IndicatorItem(text = "Nivel ${player.currentLevel}")
                             Text(
-                                text = currentData.topic,
-                                modifier = Modifier.padding(vertical = 50.dp),
-                                textAlign = TextAlign.Center
+                                text = "Palabra ${words.size}/${currentData.answer.size}",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 50.dp),
+                                textAlign = TextAlign.End
                             )
                             LinearIndicator(number = currentProgressBar.value)
+                            Row(
+                                modifier = Modifier.padding(top = 50.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                IndicatorItem(text = "Topic")
+                                Text(
+                                    text = currentData.topic,
+                                    modifier = Modifier.padding(start = 5.dp)
+                                )
+                            }
                             ButtonsContainer(
                                 letters = currentData.letters,
                                 onClick = { letter ->
