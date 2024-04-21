@@ -36,7 +36,7 @@ fun WordsList(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = 20.dp)
+                .padding(20.dp)
         ) {
             Text(
                 text = "Lista de Palabras",

@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,7 +63,7 @@ fun PlayScreen(
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
-    var showWordsList by remember { mutableStateOf(false) }
+    var showWordsList by remember { mutableStateOf(true) }
     val arrResult = remember { mutableStateListOf<String>() }
     val currentProgressBar = remember { mutableStateOf(0) }
 
@@ -75,136 +77,157 @@ fun PlayScreen(
                     onNavigateToAScreen(AppScreens.HomeScreen.route)
                 }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.surface
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if(currentData != null && !isLoading) {
+            Column {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 6.dp
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        if (currentData != null && !isLoading) {
 
-                    if(achievement != null) {
-                        AchievementUnlocked(
-                            text = "Logro desbloqueado: ${achievement.title}",
-                            player = player,
-                            achievementId = achievement.id,
-                            saveAchievement = saveAchievement
-                        )
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(text = "Level: ${player.currentLevel}")
-                        Text(text = "Word: ${words.size}/${currentData.answer.size}")
-                    }
-                    Text(
-                        text = currentData.topic,
-                        modifier = Modifier.padding(vertical = 50.dp),
-                        textAlign = TextAlign.Center
-                    )
-                    LinearIndicator(number = currentProgressBar.value)
-                    ButtonsContainer(
-                        letters = currentData.letters,
-                        onClick = { letter ->
-                            currentWord.value += letter
-                        }
-                    )
-                    Text(
-                        text = currentWord.value,
-                        modifier = Modifier.padding(bottom = 50.dp),
-                        textAlign = TextAlign.Center
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        OutlinedButton(
-                            onClick = {
-                                if (currentWord.value.isNotEmpty()) {
-                                    currentWord.value =
-                                        currentWord.value.substring(0, currentWord.value.length - 1)
+                            if (achievement != null) {
+                                AchievementUnlocked(
+                                    text = "Logro desbloqueado: ${achievement.title}",
+                                    player = player,
+                                    achievementId = achievement.id,
+                                    saveAchievement = saveAchievement
+                                )
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = "Level: ${player.currentLevel}")
+                                Text(text = "Word: ${words.size}/${currentData.answer.size}")
+                            }
+                            Text(
+                                text = currentData.topic,
+                                modifier = Modifier.padding(vertical = 50.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            LinearIndicator(number = currentProgressBar.value)
+                            ButtonsContainer(
+                                letters = currentData.letters,
+                                onClick = { letter ->
+                                    currentWord.value += letter
                                 }
-                            },
-                            enabled = currentWord.value.isNotEmpty(),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Text(text = "Eliminar letra")
-                        }
-                        Button(
-                            onClick = {
-                                words.add(currentWord.value)
-                                currentWord.value = ""
-                                currentProgressBar.value = (100/currentData.answer.size) * words.size
-                                if (words.size == currentData.answer.size) {
-                                    val res: List<String> = checkWords(currentData.answer, currentData.validAnswer, words)
-                                    arrResult.addAll(res)
-                                    if(lastLevel && !arrResult.contains("x")) {
-                                        lastLevelCompleteBtn(player)
+                            )
+                            Text(
+                                text = currentWord.value,
+                                modifier = Modifier.padding(bottom = 50.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
+                            ) {
+                                Button(
+                                    onClick = {
+                                        if (currentWord.value.isNotEmpty()) {
+                                            currentWord.value =
+                                                currentWord.value.substring(
+                                                    0,
+                                                    currentWord.value.length - 1
+                                                )
+                                        }
+                                    },
+                                    enabled = currentWord.value.isNotEmpty(),
+                                    shape = MaterialTheme.shapes.small,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                                        contentColor = MaterialTheme.colorScheme.error
+                                    )
+                                ) {
+                                    Text(text = "Eliminar letra")
+                                }
+                                Button(
+                                    onClick = {
+                                        words.add(currentWord.value)
+                                        currentWord.value = ""
+                                        currentProgressBar.value =
+                                            (100 / currentData.answer.size) * words.size
+                                        if (words.size == currentData.answer.size) {
+                                            val res: List<String> = checkWords(
+                                                currentData.answer,
+                                                currentData.validAnswer,
+                                                words
+                                            )
+                                            arrResult.addAll(res)
+                                            if (lastLevel && !arrResult.contains("x")) {
+                                                lastLevelCompleteBtn(player)
+                                            } else {
+                                                isOpenDialog = true
+                                            }
+                                        }
+                                    },
+                                    enabled = currentWord.value.isNotEmpty(),
+                                    shape = MaterialTheme.shapes.small
+                                ) {
+                                    if ((words.size + 1) < currentData.answer.size) {
+                                        Text(text = "Siguiente palabra")
                                     } else {
-                                        isOpenDialog = true
+                                        Text(text = "Comprobar")
                                     }
                                 }
-                            },
-                            enabled = currentWord.value.isNotEmpty(),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            if ((words.size + 1) < currentData.answer.size) {
-                                Text(text = "Siguiente palabra")
-                            } else {
-                                Text(text = "Comprobar")
                             }
+                            Button(
+                                onClick = { showWordsList = !showWordsList },
+                                modifier = Modifier.padding(top = 30.dp),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text(text = if (showWordsList) "Ocultar lista de palabras" else "Ver lista de palabras")
+                            }
+                        } else {
+                            Loading()
                         }
-                    }
-                    Button(
-                        onClick = { showWordsList = !showWordsList },
-                        modifier = Modifier.padding(top = 30.dp),
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Text(text = if(showWordsList) "Ocultar lista de palabras" else "Ver lista de palabras" )
-                    }
-                } else {
-                    Loading()
-                }
-
-                if (isOpenDialog) {
-                    AnimatedTransitionDialog(onDismissRequest = { }) {
-                        ResultContainer(
-                            win = !arrResult.contains("x"),
-                            arr = arrResult,
-                            onNavigateToHomeScreen = {
-                                isOpenDialog = false
-                                if(!arrResult.contains("x")) {
-                                    nextLevelBtn(player)
-                                }
-                                onNavigateToAScreen(AppScreens.HomeScreen.route)
-                            },
-                            nextLevelBtn = {
-                                isOpenDialog = false
-                                nextLevelBtn(player)
-                                onNavigateToAScreen(AppScreens.PlayScreen.route)
-                            },
-                            tryAgainBtn = {
-                                isOpenDialog = false
-                                currentWord.value = ""
-                                words.clear()
-                                arrResult.clear()
-                                currentProgressBar.value = 0
-                            }
-                        )
                     }
                 }
                 WordsList(
                     words = words,
                     visible = showWordsList
                 )
+            }
+            if (isOpenDialog) {
+                AnimatedTransitionDialog(onDismissRequest = { }) {
+                    ResultContainer(
+                        win = !arrResult.contains("x"),
+                        arr = arrResult,
+                        onNavigateToHomeScreen = {
+                            isOpenDialog = false
+                            if (!arrResult.contains("x")) {
+                                nextLevelBtn(player)
+                            }
+                            onNavigateToAScreen(AppScreens.HomeScreen.route)
+                        },
+                        nextLevelBtn = {
+                            isOpenDialog = false
+                            nextLevelBtn(player)
+                            onNavigateToAScreen(AppScreens.PlayScreen.route)
+                        },
+                        tryAgainBtn = {
+                            isOpenDialog = false
+                            currentWord.value = ""
+                            words.clear()
+                            arrResult.clear()
+                            currentProgressBar.value = 0
+                        }
+                    )
+                }
             }
         }
     }
