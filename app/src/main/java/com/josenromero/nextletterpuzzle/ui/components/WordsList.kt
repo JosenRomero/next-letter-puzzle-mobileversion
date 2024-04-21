@@ -1,9 +1,5 @@
 package com.josenromero.nextletterpuzzle.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,44 +16,33 @@ import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 
 @Composable
 fun WordsList(
-    words: List<String>,
-    visible: Boolean
+    words: List<String>
 ) {
 
-    AnimatedVisibility(
-        visible = visible,
-        enter = fadeIn(
-            animationSpec = tween(700)
-        ),
-        exit = fadeOut(
-            animationSpec = tween(700)
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
     ) {
-        Column(
+        Text(
+            text = "Lista de Palabras",
             modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-        ) {
+                .padding(vertical = 20.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        if (words.isNotEmpty()) {
+            LazyColumn() {
+                items(words) { word ->
+                    Text(text = word)
+                }
+            }
+        } else {
             Text(
-                text = "Lista de Palabras",
-                modifier = Modifier
-                    .padding(vertical = 20.dp)
-                    .fillMaxWidth(),
+                text = "Lista vacia",
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
-            if (words.isNotEmpty()) {
-                LazyColumn() {
-                    items(words) { word ->
-                        Text(text = word)
-                    }
-                }
-            } else {
-                Text(
-                    text = "Lista vacia",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            }
         }
     }
 
@@ -68,8 +53,7 @@ fun WordsList(
 fun WordsListPreview() {
     NextLetterPuzzleTheme {
         WordsList(
-            words = emptyList(),
-            visible = true
+            words = emptyList()
         )
     }
 }

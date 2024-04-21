@@ -63,7 +63,6 @@ fun PlayScreen(
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
-    var showWordsList by remember { mutableStateOf(true) }
     val arrResult = remember { mutableStateListOf<String>() }
     val currentProgressBar = remember { mutableStateOf(0) }
 
@@ -129,11 +128,13 @@ fun PlayScreen(
                             )
                             Text(
                                 text = currentWord.value,
-                                modifier = Modifier.padding(bottom = 50.dp),
+                                modifier = Modifier.padding(bottom = 30.dp),
                                 textAlign = TextAlign.Center
                             )
                             Row(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 20.dp),
                                 horizontalArrangement = Arrangement.SpaceAround
                             ) {
                                 Button(
@@ -185,21 +186,13 @@ fun PlayScreen(
                                     }
                                 }
                             }
-                            Button(
-                                onClick = { showWordsList = !showWordsList },
-                                modifier = Modifier.padding(top = 30.dp),
-                                shape = MaterialTheme.shapes.small
-                            ) {
-                                Text(text = if (showWordsList) "Ocultar lista de palabras" else "Ver lista de palabras")
-                            }
                         } else {
                             Loading()
                         }
                     }
                 }
                 WordsList(
-                    words = words,
-                    visible = showWordsList
+                    words = words
                 )
             }
             if (isOpenDialog) {
