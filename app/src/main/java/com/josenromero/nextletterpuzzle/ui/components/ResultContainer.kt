@@ -11,19 +11,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 
 @Composable
@@ -53,10 +52,12 @@ fun ResultContainer(
             LazyRow() {
                 items(arr) {item ->
                     Icon(
-                        imageVector = if(item == "o") Icons.Filled.CheckCircle else Icons.Filled.Close,
+                        painter =
+                        if (item == "o") painterResource(id = R.drawable.circle_check)
+                        else painterResource(id = R.drawable.circle_x),
                         contentDescription = "result icon",
                         modifier = Modifier.size(24.dp),
-                        tint = if(item == "o") Color.Green else Color.Red
+                        tint = if (item == "o") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                     )
                 }
             }
