@@ -23,7 +23,7 @@ fun AboutScreen(
     Scaffold(
         topBar = {
             SimpleTopAppBar(
-                title = "About",
+                title = "Acerca de",
                 onNavigateToAScreen = {
                     onNavigateToBack()
                 }

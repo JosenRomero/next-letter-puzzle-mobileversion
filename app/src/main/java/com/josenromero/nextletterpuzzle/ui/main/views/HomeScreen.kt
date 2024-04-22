@@ -1,7 +1,6 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -27,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,11 +48,11 @@ fun HomeScreen(
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
 
-    val dy by infiniteTransition.animateFloat(
-        initialValue = -100f,
-        targetValue = 100f,
+    val logoAnim by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 2f,
         animationSpec = infiniteRepeatable(
-            animation = tween(500, easing = LinearEasing),
+            animation = tween(1000),
             repeatMode = RepeatMode.Reverse
         ),
         label = "logo animation"
@@ -75,9 +75,11 @@ fun HomeScreen(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "logo",
                     modifier = Modifier
-                        .graphicsLayer(
-                            translationY = dy
-                        )
+                        .graphicsLayer {
+                            scaleX = logoAnim
+                            scaleY = logoAnim
+                            transformOrigin = TransformOrigin.Center
+                        }
                 )
                 Row(
                     modifier = Modifier.padding(bottom = 30.dp)
@@ -103,7 +105,7 @@ fun HomeScreen(
                         onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
                         shape = MaterialTheme.shapes.small
                     ) {
-                        Text(text = "Play")
+                        Text(text = "Jugar")
                     }
                 }
                 OutlinedButton(
@@ -117,14 +119,14 @@ fun HomeScreen(
                     onClick = { showBottomSheet = true },
                     shape = MaterialTheme.shapes.small
                 ) {
-                    Text(text = "Instrucciones")
+                    Text(text = "Cómo jugar")
                 }
                 OutlinedButton(
                     onClick = { onNavigateToAScreen(AppScreens.AboutScreen.route) },
                     modifier = Modifier.padding(top = 10.dp),
                     shape = MaterialTheme.shapes.small
                 ) {
-                    Text(text = "About")
+                    Text(text = "Acerca de")
                 }
                 if(showBottomSheet) {
                     BottomSheet(
