@@ -41,7 +41,7 @@ fun ResultContainer(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = if(win) "Level completed!" else "Lost!",
+            text = if(win) "Nivel completado!" else "Perdiste!",
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -73,11 +73,11 @@ fun ResultContainer(
             }
             if (win) {
                 Button(onClick = { nextLevelBtn() }) {
-                    Text(text = "Next Level")
+                    Text(text = "Siguiente nivel")
                 }
             } else {
                 Button(onClick = { tryAgainBtn() }) {
-                    Text(text = "Try Again")
+                    Text(text = "Intentar otra vez")
                 }
             }
         }

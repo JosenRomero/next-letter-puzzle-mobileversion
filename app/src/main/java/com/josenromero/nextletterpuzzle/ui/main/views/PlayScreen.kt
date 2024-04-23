@@ -122,7 +122,7 @@ fun PlayScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
                             ) {
-                                IndicatorItem(text = "Topic")
+                                IndicatorItem(text = "Tema")
                                 Text(
                                     text = currentData.topic,
                                     modifier = Modifier.padding(start = 5.dp)
