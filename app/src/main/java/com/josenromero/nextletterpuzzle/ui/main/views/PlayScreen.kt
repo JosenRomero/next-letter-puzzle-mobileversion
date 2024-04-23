@@ -1,6 +1,7 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -69,37 +70,36 @@ fun PlayScreen(
 
     val achievement = checkAchievementUnlocked(currentLevel = player.currentLevel)
 
-    Scaffold(
-        topBar = {
-            SimpleTopAppBar(
-                title = "",
-                onNavigateToAScreen = {
-                    onNavigateToAScreen(AppScreens.HomeScreen.route)
-                }
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.surface
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
+    if (currentData != null && !isLoading) {
+        Scaffold(
+            topBar = {
+                SimpleTopAppBar(
+                    title = "",
+                    onNavigateToAScreen = {
+                        onNavigateToAScreen(AppScreens.HomeScreen.route)
+                    }
+                )
+            },
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
-            Column {
-                Card(
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                Column {
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        )
                     ) {
-                        if (currentData != null && !isLoading) {
-
+                        Column(
+                            modifier = Modifier.padding(20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             if (achievement != null) {
                                 AchievementUnlocked(
                                     text = "Logro desbloqueado: ${achievement.title}",
@@ -194,43 +194,47 @@ fun PlayScreen(
                                     }
                                 }
                             }
-                        } else {
-                            Loading()
                         }
                     }
-                }
-                WordsList(
-                    words = words
-                )
-            }
-            if (isOpenDialog) {
-                AnimatedTransitionDialog(onDismissRequest = { }) {
-                    ResultContainer(
-                        win = !arrResult.contains("x"),
-                        arr = arrResult,
-                        onNavigateToHomeScreen = {
-                            isOpenDialog = false
-                            if (!arrResult.contains("x")) {
-                                nextLevelBtn(player)
-                            }
-                            onNavigateToAScreen(AppScreens.HomeScreen.route)
-                        },
-                        nextLevelBtn = {
-                            isOpenDialog = false
-                            nextLevelBtn(player)
-                            onNavigateToAScreen(AppScreens.PlayScreen.route)
-                        },
-                        tryAgainBtn = {
-                            isOpenDialog = false
-                            currentWord.value = ""
-                            words.clear()
-                            arrResult.clear()
-                            currentProgressBar.value = 0
-                        }
+                    WordsList(
+                        words = words
                     )
+                }
+                if (isOpenDialog) {
+                    AnimatedTransitionDialog(onDismissRequest = { }) {
+                        ResultContainer(
+                            win = !arrResult.contains("x"),
+                            arr = arrResult,
+                            onNavigateToHomeScreen = {
+                                isOpenDialog = false
+                                if (!arrResult.contains("x")) {
+                                    nextLevelBtn(player)
+                                }
+                                onNavigateToAScreen(AppScreens.HomeScreen.route)
+                            },
+                            nextLevelBtn = {
+                                isOpenDialog = false
+                                nextLevelBtn(player)
+                                onNavigateToAScreen(AppScreens.PlayScreen.route)
+                            },
+                            tryAgainBtn = {
+                                isOpenDialog = false
+                                currentWord.value = ""
+                                words.clear()
+                                arrResult.clear()
+                                currentProgressBar.value = 0
+                            }
+                        )
+                    }
                 }
             }
         }
+    } else {
+        Loading(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface)
+        )
     }
 
 }
