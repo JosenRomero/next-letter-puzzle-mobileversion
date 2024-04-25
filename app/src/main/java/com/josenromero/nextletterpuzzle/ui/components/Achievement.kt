@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.R
@@ -47,13 +47,14 @@ fun Achievement(
                 contentDescription = "Achievement $title",
                 modifier = Modifier.size(100.dp)
             )
-            Text(
+            SimpleText(
+                text = title,
                 modifier = Modifier.padding(0.dp, 20.dp),
-                text = title
+                fontWeight = FontWeight.SemiBold
             )
-            Text(text = goal)
+            SimpleText(text = goal)
             if (completed) {
-                Text(
+                SimpleText(
                     text = "Logro completado",
                     color = Color.White,
                     modifier = Modifier
@@ -61,7 +62,7 @@ fun Achievement(
                         .padding(5.dp)
                 )
             } else {
-                Text(
+                SimpleText(
                     text = "Logro bloqueado",
                     color = Color.White,
                     modifier = Modifier

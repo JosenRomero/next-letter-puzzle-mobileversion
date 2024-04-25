@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 
 @Composable
@@ -57,7 +57,7 @@ fun EndScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
+                SimpleText(
                     text = "Congratulations!",
                     modifier = Modifier.graphicsLayer {
                         scaleX = textAnim
@@ -67,13 +67,13 @@ fun EndScreen(
                     textAlign = TextAlign.Center,
                     style = LocalTextStyle.current.copy(textMotion = TextMotion.Animated)
                 )
-                Text(
+                SimpleText(
                     text = "You have completed all levels",
                     modifier = Modifier.fillMaxWidth().padding(top = 50.dp, bottom = 20.dp),
                     textAlign = TextAlign.Center
                 )
                 Button(onClick = { onNavigateToHomeScreen() }) {
-                    Text(text = "Menu")
+                    SimpleText(text = "Menu")
                 }
             }
         }

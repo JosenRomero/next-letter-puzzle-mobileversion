@@ -15,7 +15,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -24,9 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.AchievementUnlocked
@@ -36,6 +37,7 @@ import com.josenromero.nextletterpuzzle.ui.components.IndicatorItem
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
+import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 import com.josenromero.nextletterpuzzle.ui.components.WordsList
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
@@ -74,7 +76,7 @@ fun PlayScreen(
         Scaffold(
             topBar = {
                 SimpleTopAppBar(
-                    title = "",
+                    title = "Nivel ${player.currentLevel}",
                     onNavigateToAScreen = {
                         onNavigateToAScreen(AppScreens.HomeScreen.route)
                     }
@@ -108,22 +110,23 @@ fun PlayScreen(
                                     saveAchievement = saveAchievement
                                 )
                             }
-                            IndicatorItem(text = "Nivel ${player.currentLevel}")
-                            Text(
+                            SimpleText(
                                 text = "Palabra ${words.size}/${currentData.answer.size}",
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 50.dp),
+                                    .padding(top = 10.dp),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Light,
                                 textAlign = TextAlign.End
                             )
                             LinearIndicator(number = currentProgressBar.value)
                             Row(
-                                modifier = Modifier.padding(top = 50.dp),
+                                modifier = Modifier.padding(top = 20.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 IndicatorItem(text = "Tema")
-                                Text(
+                                SimpleText(
                                     text = currentData.topic,
                                     modifier = Modifier.padding(start = 5.dp)
                                 )
@@ -134,9 +137,10 @@ fun PlayScreen(
                                     currentWord.value += letter
                                 }
                             )
-                            Text(
+                            SimpleText(
                                 text = currentWord.value,
-                                modifier = Modifier.padding(bottom = 30.dp),
+                                modifier = Modifier.padding(bottom = 20.dp),
+                                fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Center
                             )
                             Row(
@@ -162,7 +166,7 @@ fun PlayScreen(
                                         contentColor = MaterialTheme.colorScheme.error
                                     )
                                 ) {
-                                    Text(text = "Eliminar letra")
+                                    SimpleText(text = "Eliminar letra")
                                 }
                                 Button(
                                     onClick = {
@@ -188,9 +192,9 @@ fun PlayScreen(
                                     shape = MaterialTheme.shapes.small
                                 ) {
                                     if ((words.size + 1) < currentData.answer.size) {
-                                        Text(text = "Siguiente palabra")
+                                        SimpleText(text = "Siguiente palabra")
                                     } else {
-                                        Text(text = "Comprobar")
+                                        SimpleText(text = "Comprobar")
                                     }
                                 }
                             }

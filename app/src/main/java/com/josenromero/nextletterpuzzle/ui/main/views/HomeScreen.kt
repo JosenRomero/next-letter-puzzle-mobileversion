@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.BottomSheet
+import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
@@ -105,7 +105,7 @@ fun HomeScreen(
                         onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
                         shape = MaterialTheme.shapes.small
                     ) {
-                        Text(text = "Jugar")
+                        SimpleText(text = "Jugar")
                     }
                 }
                 OutlinedButton(
@@ -113,20 +113,20 @@ fun HomeScreen(
                     modifier = Modifier.padding(vertical = 10.dp),
                     shape = MaterialTheme.shapes.small
                 ) {
-                    Text(text = "Logros")
+                    SimpleText(text = "Logros")
                 }
                 OutlinedButton(
                     onClick = { showBottomSheet = true },
                     shape = MaterialTheme.shapes.small
                 ) {
-                    Text(text = "Cómo jugar")
+                    SimpleText(text = "Cómo jugar")
                 }
                 OutlinedButton(
                     onClick = { onNavigateToAScreen(AppScreens.AboutScreen.route) },
                     modifier = Modifier.padding(top = 10.dp),
                     shape = MaterialTheme.shapes.small
                 ) {
-                    Text(text = "Acerca de")
+                    SimpleText(text = "Acerca de")
                 }
                 if(showBottomSheet) {
                     BottomSheet(

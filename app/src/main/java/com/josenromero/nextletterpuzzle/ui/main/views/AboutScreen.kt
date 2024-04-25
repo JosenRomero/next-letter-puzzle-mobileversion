@@ -6,13 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.R
+import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 
 @Composable
@@ -41,11 +42,12 @@ fun AboutScreen(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "logo"
             )
-            Text(
+            SimpleText(
                 text = "Next Letter Puzzle",
-                modifier = Modifier.padding(vertical = 30.dp)
+                modifier = Modifier.padding(vertical = 30.dp),
+                fontWeight = FontWeight.SemiBold
             )
-            Text(text = "Desarrollado por José Romero")
+            SimpleText(text = "Desarrollado por José Romero")
         }
     }
 

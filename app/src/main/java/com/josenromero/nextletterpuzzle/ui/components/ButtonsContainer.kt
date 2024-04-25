@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ShapeDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,15 +22,15 @@ fun ButtonsContainer(
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 70.dp),
-        modifier = Modifier.padding(vertical = 50.dp)
+        modifier = Modifier.padding(vertical = 20.dp)
     ) {
         itemsIndexed(letters) {_, letter ->
             Button(
                 onClick = { onClick(letter) },
-                modifier = Modifier.padding(5.dp),
+                modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
                 shape = ShapeDefaults.Small
             ) {
-                Text(text = letter)
+                SimpleText(text = letter)
             }
         }
     }

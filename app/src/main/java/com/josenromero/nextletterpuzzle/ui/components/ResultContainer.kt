@@ -14,11 +14,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,8 +40,9 @@ fun ResultContainer(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
+        SimpleText(
             text = if(win) "Nivel completado!" else "Perdiste!",
+            fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -63,21 +64,20 @@ fun ResultContainer(
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(onClick = { onNavigateToHomeScreen() }) {
-                Text(text = "Menu")
+                SimpleText(text = "Menu")
             }
             if (win) {
                 Button(onClick = { nextLevelBtn() }) {
-                    Text(text = "Siguiente nivel")
+                    SimpleText(text = "Siguiente nivel")
                 }
             } else {
                 Button(onClick = { tryAgainBtn() }) {
-                    Text(text = "Intentar otra vez")
+                    SimpleText(text = "Intentar otra vez")
                 }
             }
         }
