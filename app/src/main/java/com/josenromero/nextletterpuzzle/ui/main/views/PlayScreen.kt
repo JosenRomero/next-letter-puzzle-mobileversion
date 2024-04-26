@@ -13,8 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -39,6 +37,7 @@ import com.josenromero.nextletterpuzzle.ui.components.IndicatorItem
 import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
+import com.josenromero.nextletterpuzzle.ui.components.SimpleCard
 import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 import com.josenromero.nextletterpuzzle.ui.components.WordsList
@@ -84,7 +83,7 @@ fun PlayScreen(
                     }
                 )
             },
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ) {
             Box(
                 modifier = Modifier
@@ -92,118 +91,112 @@ fun PlayScreen(
                     .padding(it)
                     .verticalScroll(rememberScrollState())
             ) {
-                Column {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.onPrimary
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
+                Column(
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    if (achievement != null) {
+                        AchievementUnlocked(
+                            text = "Logro desbloqueado: ${achievement.title}",
+                            player = player,
+                            achievementId = achievement.id,
+                            saveAchievement = saveAchievement
                         )
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 20.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                    }
+                    SimpleCard {
+                        SimpleText(
+                            text = "Palabra ${words.size}/${currentData.answer.size}",
+                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Light,
+                            textAlign = TextAlign.End
+                        )
+                        LinearIndicator(number = currentProgressBar.value)
+                        Row(
+                            modifier = Modifier.padding(top = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
                         ) {
-                            if (achievement != null) {
-                                AchievementUnlocked(
-                                    text = "Logro desbloqueado: ${achievement.title}",
-                                    player = player,
-                                    achievementId = achievement.id,
-                                    saveAchievement = saveAchievement
-                                )
-                            }
+                            IndicatorItem(text = "Tema")
                             SimpleText(
-                                text = "Palabra ${words.size}/${currentData.answer.size}",
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Light,
-                                textAlign = TextAlign.End
+                                text = currentData.topic,
+                                modifier = Modifier.padding(start = 5.dp)
                             )
-                            LinearIndicator(number = currentProgressBar.value)
-                            Row(
-                                modifier = Modifier.padding(top = 20.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                IndicatorItem(text = "Tema")
-                                SimpleText(
-                                    text = currentData.topic,
-                                    modifier = Modifier.padding(start = 5.dp)
-                                )
+                        }
+                    }
+                    SimpleCard {
+                        ButtonsContainer(
+                            letters = currentData.letters,
+                            onClick = { letter ->
+                                currentWord.value += letter
                             }
-                            ButtonsContainer(
-                                letters = currentData.letters,
-                                onClick = { letter ->
-                                    currentWord.value += letter
-                                }
-                            )
-                            SimpleText(
-                                text = currentWord.value,
-                                modifier = Modifier.padding(bottom = 20.dp),
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 20.dp),
-                                horizontalArrangement = Arrangement.SpaceAround
-                            ) {
-                                Button(
-                                    onClick = {
-                                        if (currentWord.value.isNotEmpty()) {
-                                            currentWord.value =
-                                                currentWord.value.substring(
-                                                    0,
-                                                    currentWord.value.length - 1
-                                                )
-                                        }
-                                    },
-                                    enabled = currentWord.value.isNotEmpty(),
-                                    shape = MaterialTheme.shapes.small,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                                        contentColor = MaterialTheme.colorScheme.error
-                                    )
-                                ) {
-                                    SimpleText(text = "Eliminar letra")
-                                }
-                                Button(
-                                    onClick = {
-                                        words.add(currentWord.value)
-                                        currentWord.value = ""
-                                        currentProgressBar.value =
-                                            (100 / currentData.answer.size) * words.size
-                                        if (words.size == currentData.answer.size) {
-                                            val res: List<String> = checkWords(
-                                                currentData.answer,
-                                                currentData.validAnswer,
-                                                words
+                        )
+                        SimpleText(
+                            text = currentWord.value,
+                            modifier = Modifier.padding(bottom = 20.dp),
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
+                            Button(
+                                onClick = {
+                                    if (currentWord.value.isNotEmpty()) {
+                                        currentWord.value =
+                                            currentWord.value.substring(
+                                                0,
+                                                currentWord.value.length - 1
                                             )
-                                            arrResult.addAll(res)
-                                            if (lastLevel && !arrResult.contains("x")) {
-                                                lastLevelCompleteBtn(player)
-                                            } else {
-                                                isOpenDialog = true
-                                            }
-                                        }
-                                    },
-                                    enabled = currentWord.value.isNotEmpty(),
-                                    shape = MaterialTheme.shapes.small
-                                ) {
-                                    if ((words.size + 1) < currentData.answer.size) {
-                                        SimpleText(text = "Siguiente palabra")
-                                    } else {
-                                        SimpleText(text = "Comprobar")
                                     }
+                                },
+                                enabled = currentWord.value.isNotEmpty(),
+                                shape = MaterialTheme.shapes.small,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                                    contentColor = MaterialTheme.colorScheme.error
+                                )
+                            ) {
+                                SimpleText(text = "Eliminar letra")
+                            }
+                            Button(
+                                onClick = {
+                                    words.add(currentWord.value)
+                                    currentWord.value = ""
+                                    currentProgressBar.value =
+                                        (100 / currentData.answer.size) * words.size
+                                    if (words.size == currentData.answer.size) {
+                                        val res: List<String> = checkWords(
+                                            currentData.answer,
+                                            currentData.validAnswer,
+                                            words
+                                        )
+                                        arrResult.addAll(res)
+                                        if (lastLevel && !arrResult.contains("x")) {
+                                            lastLevelCompleteBtn(player)
+                                        } else {
+                                            isOpenDialog = true
+                                        }
+                                    }
+                                },
+                                enabled = currentWord.value.isNotEmpty(),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                if ((words.size + 1) < currentData.answer.size) {
+                                    SimpleText(text = "Siguiente palabra")
+                                } else {
+                                    SimpleText(text = "Comprobar")
                                 }
                             }
                         }
                     }
-                    WordsList(
-                        words = words
-                    )
+                    SimpleCard {
+                        WordsList(
+                            words = words
+                        )
+                    }
                 }
                 if (isOpenDialog) {
                     AnimatedTransitionDialog(onDismissRequest = { }) {
