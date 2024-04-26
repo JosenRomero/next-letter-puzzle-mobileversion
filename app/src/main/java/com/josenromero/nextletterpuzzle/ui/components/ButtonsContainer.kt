@@ -1,10 +1,10 @@
 package com.josenromero.nextletterpuzzle.ui.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.runtime.Composable
@@ -14,17 +14,18 @@ import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Constants
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ButtonsContainer(
     letters: ArrayList<String>,
     onClick: (letter: String) -> Unit
 ) {
 
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 70.dp),
-        modifier = Modifier.padding(vertical = 20.dp)
+    FlowRow(
+        modifier = Modifier.padding(vertical = 20.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
-        itemsIndexed(letters) {_, letter ->
+        letters.forEach { letter ->
             Button(
                 onClick = { onClick(letter) },
                 modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 5.dp),

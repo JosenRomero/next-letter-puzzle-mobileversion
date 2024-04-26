@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -88,6 +90,7 @@ fun PlayScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
+                    .verticalScroll(rememberScrollState())
             ) {
                 Column {
                     Card(
@@ -99,7 +102,7 @@ fun PlayScreen(
                         )
                     ) {
                         Column(
-                            modifier = Modifier.padding(20.dp),
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 20.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             if (achievement != null) {
@@ -112,9 +115,7 @@ fun PlayScreen(
                             }
                             SimpleText(
                                 text = "Palabra ${words.size}/${currentData.answer.size}",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 10.dp),
+                                modifier = Modifier.fillMaxWidth(),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Light,
                                 textAlign = TextAlign.End
