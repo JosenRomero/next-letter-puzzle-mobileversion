@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.data.Item
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.AchievementUnlocked
@@ -69,7 +68,8 @@ fun PlayScreen(
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
     val arrResult = remember { mutableStateListOf<String>() }
-    val currentProgressBar = remember { mutableStateOf(0) }
+    val initialProgressBar = 10
+    val currentProgressBar = remember { mutableStateOf(initialProgressBar) }
 
     val achievement = checkAchievementUnlocked(currentLevel = player.currentLevel)
 
@@ -103,14 +103,13 @@ fun PlayScreen(
                         )
                     }
                     SimpleCard {
-                        SimpleText(
-                            text = "Palabra ${words.size}/${currentData.answer.size}",
-                            modifier = Modifier.fillMaxWidth(),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Light,
-                            textAlign = TextAlign.End
+                        ProgressIndicator(
+                            number = currentProgressBar.value,
+                            totalWords = currentData.answer.size,
+                            currentWords = words.size
                         )
-                        ProgressIndicator(number = currentProgressBar.value)
+                    }
+                    SimpleCard {
                         Row(
                             modifier = Modifier.padding(top = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -122,8 +121,6 @@ fun PlayScreen(
                                 modifier = Modifier.padding(start = 5.dp)
                             )
                         }
-                    }
-                    SimpleCard {
                         ButtonsContainer(
                             letters = currentData.letters,
                             onClick = { letter ->
@@ -220,7 +217,7 @@ fun PlayScreen(
                                 currentWord.value = ""
                                 words.clear()
                                 arrResult.clear()
-                                currentProgressBar.value = 0
+                                currentProgressBar.value = initialProgressBar
                             }
                         )
                     }
