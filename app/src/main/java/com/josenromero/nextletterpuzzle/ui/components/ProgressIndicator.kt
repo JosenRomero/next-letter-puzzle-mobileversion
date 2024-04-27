@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 
 @Composable
-fun LinearIndicator(
+fun ProgressIndicator(
     number: Int
 ) {
 
@@ -34,9 +34,9 @@ fun LinearIndicator(
 
 @Preview
 @Composable
-fun LinearIndicatorPreview() {
+fun ProgressIndicatorPreview() {
     NextLetterPuzzleTheme {
-        LinearIndicator(
+        ProgressIndicator(
             number = 24
         )
     }

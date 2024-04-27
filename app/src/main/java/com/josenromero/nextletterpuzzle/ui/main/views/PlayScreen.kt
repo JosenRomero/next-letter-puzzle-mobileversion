@@ -34,7 +34,7 @@ import com.josenromero.nextletterpuzzle.ui.components.AchievementUnlocked
 import com.josenromero.nextletterpuzzle.ui.components.AnimatedTransitionDialog
 import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.IndicatorItem
-import com.josenromero.nextletterpuzzle.ui.components.LinearIndicator
+import com.josenromero.nextletterpuzzle.ui.components.ProgressIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.components.SimpleCard
@@ -110,7 +110,7 @@ fun PlayScreen(
                             fontWeight = FontWeight.Light,
                             textAlign = TextAlign.End
                         )
-                        LinearIndicator(number = currentProgressBar.value)
+                        ProgressIndicator(number = currentProgressBar.value)
                         Row(
                             modifier = Modifier.padding(top = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
