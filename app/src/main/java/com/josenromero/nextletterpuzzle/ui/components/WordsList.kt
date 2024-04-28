@@ -2,7 +2,7 @@ package com.josenromero.nextletterpuzzle.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,9 +32,7 @@ fun WordsList(
             color = Color.Transparent
         )
         if (words.isNotEmpty()) {
-            FlowRow(
-                maxItemsInEachRow = 1
-            ) {
+            FlowColumn {
                 words.forEach { word ->
                     SimpleText(
                         text = word,
