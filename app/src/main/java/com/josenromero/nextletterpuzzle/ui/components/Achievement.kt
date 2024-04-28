@@ -5,14 +5,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,47 +29,52 @@ fun Achievement(
     completed: Boolean
 ) {
 
-    Card(
-        modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        )
+    SimpleCard(
+        defaultElevation = 6.dp
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = imgId),
                 contentDescription = "Achievement $title",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(150.dp)
             )
-            SimpleText(
-                text = title,
-                modifier = Modifier.padding(0.dp, 20.dp),
-                fontWeight = FontWeight.SemiBold
-            )
-            SimpleText(text = goal)
-            if (completed) {
+            Column {
                 SimpleText(
-                    text = "Logro completado",
-                    color = Color.White,
-                    modifier = Modifier
-                        .background(Color.Green)
-                        .padding(5.dp)
+                    text = title,
+                    modifier = Modifier.padding(bottom = 20.dp),
+                    fontWeight = FontWeight.SemiBold
                 )
-            } else {
                 SimpleText(
-                    text = "Logro bloqueado",
-                    color = Color.White,
-                    modifier = Modifier
-                        .background(Color.Red)
-                        .padding(5.dp)
+                    text = goal,
+                    modifier = Modifier.padding(bottom = 10.dp)
                 )
+                if (completed) {
+                    SimpleText(
+                        text = "Logro completado",
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .padding(5.dp)
+                    )
+                } else {
+                    SimpleText(
+                        text = "Logro bloqueado",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.errorContainer,
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .padding(5.dp)
+                    )
+                }
             }
         }
     }
