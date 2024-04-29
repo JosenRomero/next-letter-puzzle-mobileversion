@@ -27,7 +27,7 @@ fun SimpleCard(
         )
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+            modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             content()

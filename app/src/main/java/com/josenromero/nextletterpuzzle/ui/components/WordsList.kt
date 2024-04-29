@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +22,6 @@ fun WordsList(
 ) {
 
     Column(
-        modifier = Modifier.padding(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IndicatorItem(text = "Lista de palabras")

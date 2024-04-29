@@ -111,7 +111,6 @@ fun PlayScreen(
                     }
                     SimpleCard {
                         Row(
-                            modifier = Modifier.padding(top = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
@@ -135,8 +134,7 @@ fun PlayScreen(
                         )
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 20.dp),
+                                .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             Button(
