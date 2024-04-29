@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -37,7 +36,7 @@ fun SimpleTopAppBar(
                 Icon(
                     imageVector = Icons.Filled.Close,
                     contentDescription = "back icon",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

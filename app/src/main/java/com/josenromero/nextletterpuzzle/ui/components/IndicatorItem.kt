@@ -34,12 +34,12 @@ fun IndicatorItem(
             painter = painterResource(id = R.drawable.circle_icon),
             contentDescription = "Indicator icon",
             modifier = Modifier.size(10.dp),
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.tertiary
         )
         SimpleText(
             text = text,
             modifier = Modifier.padding(start = 5.dp),
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.tertiary
         )
     }
 }
