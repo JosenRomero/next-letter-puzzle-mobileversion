@@ -92,7 +92,7 @@ fun PlayScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 Column(
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(5.dp)
                 ) {
                     if (achievement != null) {
                         AchievementUnlocked(
