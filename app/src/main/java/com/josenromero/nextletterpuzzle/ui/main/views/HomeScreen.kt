@@ -12,11 +12,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,11 +28,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 import com.josenromero.nextletterpuzzle.ui.components.BottomSheet
+import com.josenromero.nextletterpuzzle.ui.components.CustomBottomAppBar
+import com.josenromero.nextletterpuzzle.ui.components.CustomIconButton
 import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
@@ -58,7 +63,28 @@ fun HomeScreen(
         label = "logo animation"
     )
 
-    Scaffold {
+    Scaffold(
+        bottomBar = {
+            CustomBottomAppBar {
+                CustomIconButton(
+                    onClick = { showBottomSheet = true },
+                    icon = painterResource(id = R.drawable.question_mark_icon),
+                    contentDescription = "howToPlay icon"
+                )
+                CustomIconButton(
+                    onClick = { onNavigateToAScreen(AppScreens.AchievementsScreen.route) },
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    icon = painterResource(id = R.drawable.achievement_icon),
+                    contentDescription = "achievements icon"
+                )
+                CustomIconButton(
+                    onClick = { onNavigateToAScreen(AppScreens.AboutScreen.route) },
+                    icon = painterResource(id = R.drawable.info_icon),
+                    contentDescription = "about icon"
+                )
+            }
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,9 +107,7 @@ fun HomeScreen(
                             transformOrigin = TransformOrigin.Center
                         }
                 )
-                Row(
-                    modifier = Modifier.padding(bottom = 30.dp)
-                ) {
+                Row {
                     Image(
                         painter = painterResource(id = R.drawable.title_s1),
                         contentDescription = "title part1",
@@ -101,32 +125,52 @@ fun HomeScreen(
                     )
                 }
                 if(players.isNotEmpty() && players[0].currentLevel <= Constants.lastLevel) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .padding(vertical = 20.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            SimpleText(
+                                text = "${players[0].achievements.size}",
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 25.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center
+                            )
+                            SimpleText(
+                                text = "Logros",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            SimpleText(
+                                text = "${players[0].currentLevel}",
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 25.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center
+                            )
+                            SimpleText(
+                                text = "Nivel",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                     Button(
                         onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
                         shape = MaterialTheme.shapes.small
                     ) {
                         SimpleText(text = "Jugar")
                     }
-                }
-                OutlinedButton(
-                    onClick = { onNavigateToAScreen(AppScreens.AchievementsScreen.route) },
-                    modifier = Modifier.padding(vertical = 10.dp),
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    SimpleText(text = "Logros")
-                }
-                OutlinedButton(
-                    onClick = { showBottomSheet = true },
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    SimpleText(text = "Cómo jugar")
-                }
-                OutlinedButton(
-                    onClick = { onNavigateToAScreen(AppScreens.AboutScreen.route) },
-                    modifier = Modifier.padding(top = 10.dp),
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    SimpleText(text = "Acerca de")
                 }
                 if(showBottomSheet) {
                     BottomSheet(
