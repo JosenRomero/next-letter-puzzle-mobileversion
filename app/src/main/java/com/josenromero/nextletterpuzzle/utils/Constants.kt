@@ -6,9 +6,12 @@ import com.josenromero.nextletterpuzzle.data.AchievementAboutLevel
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
 
 object Constants {
-    const val lastLevel = 4
+    const val lastLevel = 25
     const val player_database = "player_database"
     const val player_table = "player_table"
+
+    const val PREFERENCESKEY_HowToPlay = "key_howToPlay"
+    const val PREFERENCES_DATASTORE = "dataStore"
 
     val achievementsAboutLevel: List<AchievementAboutLevel> = listOf(
         AchievementAboutLevel("1", R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
