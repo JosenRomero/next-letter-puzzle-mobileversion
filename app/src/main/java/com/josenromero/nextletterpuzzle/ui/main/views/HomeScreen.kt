@@ -46,7 +46,9 @@ import com.josenromero.nextletterpuzzle.utils.Constants
 @Composable
 fun HomeScreen(
     onNavigateToAScreen: (route: String) -> Unit,
-    players: List<PlayerEntity>
+    players: List<PlayerEntity>,
+    showHowToPlay: Boolean?,
+    updateHowToPlay: (value: Boolean) -> Unit
 ) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -62,6 +64,12 @@ fun HomeScreen(
         ),
         label = "logo animation"
     )
+
+    // first game
+    if(showHowToPlay == false) {
+        showBottomSheet = true
+        updateHowToPlay(true)
+    }
 
     Scaffold(
         bottomBar = {
@@ -191,7 +199,9 @@ fun HomeScreenPreview() {
     NextLetterPuzzleTheme {
         HomeScreen(
             onNavigateToAScreen = {},
-            players = emptyList()
+            players = emptyList(),
+            showHowToPlay = false,
+            updateHowToPlay = {}
         )
     }
 }

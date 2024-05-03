@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.josenromero.nextletterpuzzle.ui.main.viewmodels.GameViewModel
+import com.josenromero.nextletterpuzzle.ui.main.viewmodels.PreferencesViewModel
 import com.josenromero.nextletterpuzzle.ui.main.views.AboutScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.AchievementsScreen
 import com.josenromero.nextletterpuzzle.ui.main.views.EndScreen
@@ -20,6 +21,7 @@ fun AppNavigation() {
 
     val navController = rememberNavController()
     val gameViewModel: GameViewModel = hiltViewModel()
+    val preferencesViewModel: PreferencesViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(
@@ -65,7 +67,11 @@ fun AppNavigation() {
         ) {
             HomeScreen(
                 onNavigateToAScreen = {  route -> navController.navigate(route) },
-                players = gameViewModel.players.value
+                players = gameViewModel.players.value,
+                showHowToPlay = preferencesViewModel.showHowToPlay.value,
+                updateHowToPlay = { value ->
+                    preferencesViewModel.setValueHowToPlay(value)
+                }
             )
         }
         composable(
