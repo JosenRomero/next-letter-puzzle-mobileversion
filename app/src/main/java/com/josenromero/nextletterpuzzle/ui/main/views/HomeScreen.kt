@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
+import com.josenromero.nextletterpuzzle.ui.components.AnimatedFadeAndExpand
 import com.josenromero.nextletterpuzzle.ui.components.BottomSheet
 import com.josenromero.nextletterpuzzle.ui.components.CustomBottomAppBar
 import com.josenromero.nextletterpuzzle.ui.components.CustomIconButton
@@ -102,13 +103,13 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(10.dp),
-                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo),
                     contentDescription = "logo",
                     modifier = Modifier
+                        .padding(top = 30.dp)
                         .graphicsLayer {
                             scaleX = logoAnim
                             scaleY = logoAnim
@@ -132,52 +133,57 @@ fun HomeScreen(
                         modifier = Modifier.size(100.dp)
                     )
                 }
-                if(players.isNotEmpty() && players[0].currentLevel <= Constants.lastLevel) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f)
-                            .padding(vertical = 20.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
+                if(players.isNotEmpty()) {
+                    AnimatedFadeAndExpand {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .padding(vertical = 20.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            SimpleText(
-                                text = "${players[0].achievements.size}",
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 25.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center
-                            )
-                            SimpleText(
-                                text = "Logros",
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            SimpleText(
-                                text = "${players[0].currentLevel}",
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 25.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center
-                            )
-                            SimpleText(
-                                text = "Nivel",
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center
-                            )
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                SimpleText(
+                                    text = "${players[0].achievements.size}",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    fontSize = 25.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    textAlign = TextAlign.Center
+                                )
+                                SimpleText(
+                                    text = "Logros",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                SimpleText(
+                                    text = "${players[0].currentLevel}",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    fontSize = 25.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    textAlign = TextAlign.Center
+                                )
+                                SimpleText(
+                                    text = "Nivel",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
-                    Button(
-                        onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        SimpleText(text = "Jugar")
+                    AnimatedFadeAndExpand {
+                        Button(
+                            onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
+                            shape = MaterialTheme.shapes.small,
+                            enabled = players[0].currentLevel <= Constants.lastLevel
+                        ) {
+                            SimpleText(text = "Jugar")
+                        }
                     }
                 }
                 if(showBottomSheet) {
