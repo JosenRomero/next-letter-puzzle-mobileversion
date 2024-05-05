@@ -1,6 +1,7 @@
 package com.josenromero.nextletterpuzzle.ui.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,7 @@ fun BottomSheet(
     closeBtn: () -> Unit
 ) {
 
-    val modalBottomSheetState = rememberModalBottomSheetState()
+    val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -39,7 +40,8 @@ fun BottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SimpleText(
                 text = "Cómo jugar",
@@ -49,13 +51,13 @@ fun BottomSheet(
                 textAlign = TextAlign.Center
             )
             HorizontalDivider(
-                Modifier.height(10.dp),
+                Modifier.height(30.dp),
                 color = Color.Transparent
             )
             SimpleText(text = "En cada nivel se te proporcionará un conjunto de letras y un tema.")
             SimpleText(text = "Tu objetivo es encontrar todas las palabras relacionadas con el tema utilizando las letras proporcionadas.")
             HorizontalDivider(
-                Modifier.height(20.dp),
+                Modifier.height(24.dp),
                 color = Color.Transparent
             )
             SimpleText(text = "1. Haz clic en las letras para formar una palabra relacionada con el tema.")
@@ -63,20 +65,16 @@ fun BottomSheet(
             SimpleText(text = "3. Repite los pasos 1 y 2 para encontrar todas las palabras posibles en el nivel.")
             SimpleText(text = "4. Luego, presiona el botón 'Comprobar' para verificar tus respuestas.")
             HorizontalDivider(
-                Modifier.height(20.dp),
+                Modifier.height(24.dp),
                 color = Color.Transparent
             )
             Button(onClick = closeBtn) {
                 SimpleText(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Aceptar",
+                    text = "Entendido",
                     textAlign = TextAlign.Center
                 )
             }
-            HorizontalDivider(
-                Modifier.height(20.dp),
-                color = Color.Transparent
-            )
         }
     }
 
