@@ -59,25 +59,27 @@ fun PlayScreen(
 ) {
 
     var currentData: Item? = null
-
-    if(player.currentLevel <= Constants.lastLevel) {
-        currentData = data[player.currentLevel-1]
-    }
-
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
     var isOpenDialog by remember { mutableStateOf(false) }
     val arrResult = remember { mutableStateListOf<String>() }
     val initialProgressBar = 10
     val currentProgressBar = remember { mutableStateOf(initialProgressBar) }
+    var endGame by remember { mutableStateOf(false) }
 
-    val achievement = checkAchievementUnlocked(currentLevel = player.currentLevel)
+    val currentLevel = if(!endGame) player.currentLevel else Constants.lastLevel
+
+    val achievement = checkAchievementUnlocked(currentLevel = currentLevel)
+
+    if(currentLevel <= Constants.lastLevel) {
+        currentData = data[currentLevel-1]
+    }
 
     if (currentData != null && !isLoading) {
         Scaffold(
             topBar = {
                 SimpleTopAppBar(
-                    title = "Nivel ${player.currentLevel}",
+                    title = "Nivel $currentLevel",
                     onNavigateToAScreen = {
                         onNavigateToAScreen(AppScreens.HomeScreen.route)
                     }
@@ -170,6 +172,7 @@ fun PlayScreen(
                                         )
                                         arrResult.addAll(res)
                                         if (lastLevel && !arrResult.contains("x")) {
+                                            endGame = true
                                             lastLevelCompleteBtn(player)
                                         } else {
                                             isOpenDialog = true
