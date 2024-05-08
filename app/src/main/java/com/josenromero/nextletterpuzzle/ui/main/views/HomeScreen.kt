@@ -148,6 +148,7 @@ fun HomeScreen(
                                 SimpleText(
                                     text = "${players[0].achievements.size}",
                                     modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontSize = 25.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     textAlign = TextAlign.Center
@@ -155,6 +156,7 @@ fun HomeScreen(
                                 SimpleText(
                                     text = "Logros",
                                     modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.primary,
                                     textAlign = TextAlign.Center
                                 )
                             }
@@ -162,8 +164,9 @@ fun HomeScreen(
                                 modifier = Modifier.weight(1f)
                             ) {
                                 SimpleText(
-                                    text = "${players[0].currentLevel}",
+                                    text = if(players[0].currentLevel > Constants.lastLevel) "${Constants.lastLevel}" else "${players[0].currentLevel}",
                                     modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontSize = 25.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     textAlign = TextAlign.Center
@@ -171,6 +174,7 @@ fun HomeScreen(
                                 SimpleText(
                                     text = "Nivel",
                                     modifier = Modifier.fillMaxWidth(),
+                                    color = MaterialTheme.colorScheme.primary,
                                     textAlign = TextAlign.Center
                                 )
                             }
