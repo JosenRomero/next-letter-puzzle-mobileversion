@@ -16,20 +16,18 @@ fun CustomBottomAppBar(
     content: @Composable (() -> Unit)
 ) {
 
-    AnimatedSlideVertically {
-        BottomAppBar(
-            modifier = Modifier
-                .padding(16.dp)
-                .clip(
-                    shape = RoundedCornerShape(50.dp)
-                )
+    BottomAppBar(
+        modifier = Modifier
+            .padding(16.dp)
+            .clip(
+                shape = RoundedCornerShape(50.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                content()
-            }
+            content()
         }
     }
 
