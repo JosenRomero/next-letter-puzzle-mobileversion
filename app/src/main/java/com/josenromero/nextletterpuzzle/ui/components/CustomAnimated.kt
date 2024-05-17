@@ -4,13 +4,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,13 +55,13 @@ fun AnimatedFadeAndExpand(
 }
 
 @Composable
-fun AnimatedSlideVertically(
+fun AnimatedFade(
     content:  @Composable AnimatedVisibilityScope.() -> Unit
 ) {
 
     CustomAnimated(
-        enter = slideInVertically(tween(durationMillis = 700)),
-        exit = slideOutVertically(tween(durationMillis = 700)),
+        enter = fadeIn(),
+        exit = fadeOut(),
         content = content
     )
 

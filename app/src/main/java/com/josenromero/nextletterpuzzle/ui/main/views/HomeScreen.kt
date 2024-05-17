@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.data.player.PlayerEntity
-import com.josenromero.nextletterpuzzle.ui.components.AnimatedFadeAndExpand
+import com.josenromero.nextletterpuzzle.ui.components.AnimatedFade
 import com.josenromero.nextletterpuzzle.ui.components.BottomSheet
 import com.josenromero.nextletterpuzzle.ui.components.CustomBottomAppBar
 import com.josenromero.nextletterpuzzle.ui.components.CustomIconButton
@@ -134,7 +134,7 @@ fun HomeScreen(
                     )
                 }
                 if(players.isNotEmpty()) {
-                    AnimatedFadeAndExpand {
+                    AnimatedFade {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
@@ -180,15 +180,14 @@ fun HomeScreen(
                             }
                         }
                     }
-                    AnimatedFadeAndExpand {
-                        Button(
-                            onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
-                            shape = MaterialTheme.shapes.small,
-                            enabled = players[0].currentLevel <= Constants.lastLevel
-                        ) {
-                            SimpleText(text = "Jugar")
-                        }
+                    Button(
+                        onClick = { onNavigateToAScreen(AppScreens.PlayScreen.route) },
+                        shape = MaterialTheme.shapes.small,
+                        enabled = players[0].currentLevel <= Constants.lastLevel
+                    ) {
+                        SimpleText(text = "Jugar")
                     }
+
                 }
                 if(showBottomSheet) {
                     BottomSheet(
