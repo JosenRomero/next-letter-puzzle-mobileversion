@@ -30,7 +30,7 @@ fun BottomSheet(
     closeBtn: () -> Unit
 ) {
 
-    val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val modalBottomSheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
