@@ -98,12 +98,7 @@ fun PlayScreen(
                     modifier = Modifier.padding(5.dp)
                 ) {
                     if (achievement != null) {
-                        AchievementUnlocked(
-                            text = "Logro desbloqueado: ${achievement.title}",
-                            player = player,
-                            achievementId = achievement.id,
-                            saveAchievement = saveAchievement
-                        )
+                        ShowAchievement(player, achievement.title, achievement.id, saveAchievement)
                     }
                     SimpleCard {
                         ProgressIndicator(
@@ -233,6 +228,23 @@ fun PlayScreen(
                 .background(MaterialTheme.colorScheme.surface)
         )
     }
+
+}
+
+@Composable
+fun ShowAchievement(
+    player: PlayerEntity,
+    achievementTitle:  String,
+    achievementID: String,
+    saveAchievement: (player: PlayerEntity, achievementId: String) -> Unit
+) {
+
+    AchievementUnlocked(
+        text = "Logro desbloqueado: $achievementTitle",
+        player = player,
+        achievementId = achievementID,
+        saveAchievement = saveAchievement
+    )
 
 }
 
