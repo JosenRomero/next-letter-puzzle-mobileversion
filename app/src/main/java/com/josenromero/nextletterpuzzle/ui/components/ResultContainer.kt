@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
+import com.josenromero.nextletterpuzzle.utils.Answer
 
 @Composable
 fun ResultContainer(
@@ -54,11 +55,11 @@ fun ResultContainer(
                 items(arr) {item ->
                     Icon(
                         painter =
-                        if (item == "o") painterResource(id = R.drawable.circle_check)
+                        if (item !== Answer.Wrong.character) painterResource(id = R.drawable.circle_check)
                         else painterResource(id = R.drawable.circle_x),
                         contentDescription = "result icon",
                         modifier = Modifier.size(24.dp),
-                        tint = if (item == "o") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        tint = if (item !== Answer.Wrong.character) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                     )
                 }
             }

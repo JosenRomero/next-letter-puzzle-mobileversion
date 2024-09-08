@@ -42,6 +42,7 @@ import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 import com.josenromero.nextletterpuzzle.ui.components.WordsList
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
+import com.josenromero.nextletterpuzzle.utils.Answer
 import com.josenromero.nextletterpuzzle.utils.Constants
 import com.josenromero.nextletterpuzzle.utils.checkAchievementUnlocked
 import com.josenromero.nextletterpuzzle.utils.checkWords
@@ -171,7 +172,7 @@ fun PlayScreen(
                                             words
                                         )
                                         arrResult.addAll(res)
-                                        if (lastLevel && !arrResult.contains("x")) {
+                                        if (lastLevel && !arrResult.contains(Answer.Wrong.character)) {
                                             endGame = true
                                             lastLevelCompleteBtn(player)
                                         } else {
@@ -199,11 +200,11 @@ fun PlayScreen(
                 if (isOpenDialog) {
                     AnimatedTransitionDialog(onDismissRequest = { }) {
                         ResultContainer(
-                            win = !arrResult.contains("x"),
+                            win = !arrResult.contains(Answer.Wrong.character),
                             arr = arrResult,
                             onNavigateToHomeScreen = {
                                 isOpenDialog = false
-                                if (!arrResult.contains("x")) {
+                                if (!arrResult.contains(Answer.Wrong.character)) {
                                     nextLevelBtn(player)
                                 }
                                 onNavigateToAScreen(AppScreens.HomeScreen.route)
