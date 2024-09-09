@@ -14,9 +14,9 @@ object Constants {
     const val PREFERENCES_DATASTORE = "dataStore"
 
     val achievementsAboutLevel: List<AchievementAboutLevel> = listOf(
-        AchievementAboutLevel("1", R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7),
-        AchievementAboutLevel("2", R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18),
-        AchievementAboutLevel("3", R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24)
+        AchievementAboutLevel("1", R.drawable.achievement_easy, "Fácil", "Completa 7 niveles", 7+1),
+        AchievementAboutLevel("2", R.drawable.achievement_normal, "Normal", "Completa 18 niveles", 18+1),
+        AchievementAboutLevel("3", R.drawable.achievement_hard, "Difícil", "Completa 24 niveles", 24+1)
     )
 
     var playerFake = PlayerEntity(0, "Jose Romero", 1, emptyList())
