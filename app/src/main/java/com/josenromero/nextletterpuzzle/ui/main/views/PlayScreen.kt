@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -97,7 +99,7 @@ fun PlayScreen(
                 Column(
                     modifier = Modifier.padding(5.dp)
                 ) {
-                    if (achievement != null) {
+                    if (achievement != null && Constants.achievementsIDs_basic.contains(achievement.id)) {
                         ShowAchievement(player, achievement.title, achievement.id, saveAchievement)
                     }
                     SimpleCard {
@@ -194,6 +196,15 @@ fun PlayScreen(
                 }
                 if (isOpenDialog) {
                     AnimatedTransitionDialog(onDismissRequest = { }) {
+                        if (achievement != null && !arrResult.contains(Answer.Wrong.character) && !arrResult.contains(Answer.Right.character)) {
+                            ShowAchievement(
+                                player = player,
+                                achievementTitle = achievement.title,
+                                achievementID = achievement.id,
+                                saveAchievement = saveAchievement
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(50.dp))
                         ResultContainer(
                             win = !arrResult.contains(Answer.Wrong.character),
                             arr = arrResult,

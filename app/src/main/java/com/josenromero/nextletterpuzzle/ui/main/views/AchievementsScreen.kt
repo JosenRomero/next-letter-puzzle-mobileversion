@@ -23,8 +23,6 @@ fun AchievementsScreen(
     onNavigateToBack: () -> Unit
 ) {
 
-    val currentLevel = player.currentLevel
-
     Scaffold(
         topBar = {
             SimpleTopAppBar(
@@ -45,11 +43,12 @@ fun AchievementsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(Constants.achievementsAboutLevel) { achievement ->
+                    val achievementCompleted: Boolean = player.achievements.contains(achievement.id)
                     Achievement(
                         imgId = achievement.imgId,
                         title = achievement.title,
                         goal = achievement.goal,
-                        completed = currentLevel > achievement.completedLevel
+                        completed = achievementCompleted
                     )
                 }
             }
