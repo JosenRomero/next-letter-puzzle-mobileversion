@@ -19,10 +19,10 @@ object Constants {
         AchievementAboutLevel("1", R.drawable.achievement_easy, "Dificultad fácil", "Completa 7 niveles", 7+1),
         AchievementAboutLevel("2", R.drawable.achievement_normal, "Dificultad normal", "Completa 18 niveles", 18+1),
         AchievementAboutLevel("3", R.drawable.achievement_hard, "Dificultad difícil", "Completa 24 niveles", 24+1),
-        AchievementAboutLevel("4", R.drawable.achievement_easy, "Secretos. Dificultad fácil", "Encuentra todas las respuestas secretas del nivel 9", 9),
-        AchievementAboutLevel("5", R.drawable.achievement_easy, "Secretos. Dificultad 2", "Encuentra todas las respuestas secretas del nivel 16", 16),
-        AchievementAboutLevel("6", R.drawable.achievement_easy, "Secretos. Dificultad 3", "Encuentra todas las respuestas secretas del nivel 18", 18),
-        AchievementAboutLevel("7", R.drawable.achievement_easy, "Secretos. Dificultad difícil", "Encuentra todas las respuestas secretas del nivel 21", 21)
+        AchievementAboutLevel("4", R.drawable.achievement_human_lvl9, "Secretos. Dificultad fácil", "Encuentra todas las respuestas secretas del nivel 9", 9),
+        AchievementAboutLevel("5", R.drawable.achievement_office_lvl16, "Secretos. Dificultad 2", "Encuentra todas las respuestas secretas del nivel 16", 16),
+        AchievementAboutLevel("6", R.drawable.achievement_geometric_lvl18, "Secretos. Dificultad 3", "Encuentra todas las respuestas secretas del nivel 18", 18),
+        AchievementAboutLevel("7", R.drawable.achievement_chemistry_lvl21, "Secretos. Dificultad difícil", "Encuentra todas las respuestas secretas del nivel 21", 21)
     )
 
     var playerFake = PlayerEntity(0, "Jose Romero", 1, emptyList())
