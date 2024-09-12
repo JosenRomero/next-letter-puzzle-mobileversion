@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -24,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.josenromero.nextletterpuzzle.R
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Answer
@@ -38,57 +37,70 @@ fun ResultContainer(
 ) {
 
     Column(
-        modifier = Modifier
-            .background(
-                color = MaterialTheme.colorScheme.onPrimary,
-                shape = RoundedCornerShape(25.dp, 10.dp, 25.dp, 10.dp)
-            )
-            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        SimpleText(
-            text = if(win) "Nivel completado!" else "Perdiste!",
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(25.dp, 10.dp, 0.dp, 0.dp)
+                )
+                .padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyRow() {
-                items(arr) {item ->
-                    Icon(
-                        painter =
-                        if (item !== Answer.Wrong.character) painterResource(id = R.drawable.circle_check)
-                        else painterResource(id = R.drawable.circle_x),
-                        contentDescription = "result icon",
-                        modifier = Modifier.size(24.dp),
-                        tint = if (item !== Answer.Wrong.character) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
-                    )
+            SimpleText(
+                text = if(win) "Nivel completado!" else "Perdiste!",
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 17.sp,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Center
+            )
+        }
+        Column(
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = RoundedCornerShape(0.dp, 0.dp, 25.dp, 10.dp)
+                )
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                LazyRow() {
+                    items(arr) {item ->
+                        Icon(
+                            painter =
+                            if (item !== Answer.Wrong.character) painterResource(id = R.drawable.circle_check)
+                            else painterResource(id = R.drawable.circle_x),
+                            contentDescription = "result icon",
+                            modifier = Modifier.size(24.dp),
+                            tint = if (item !== Answer.Wrong.character) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Button(onClick = { onNavigateToHomeScreen() }) {
+                    SimpleText(text = "Menu")
+                }
+                if (win) {
+                    Button(onClick = { nextLevelBtn() }) {
+                        SimpleText(text = "Siguiente nivel")
+                    }
+                } else {
+                    Button(onClick = { tryAgainBtn() }) {
+                        SimpleText(text = "Intentar otra vez")
+                    }
                 }
             }
         }
-        Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Button(onClick = { onNavigateToHomeScreen() }) {
-                SimpleText(text = "Menu")
-            }
-            if (win) {
-                Button(onClick = { nextLevelBtn() }) {
-                    SimpleText(text = "Siguiente nivel")
-                }
-            } else {
-                Button(onClick = { tryAgainBtn() }) {
-                    SimpleText(text = "Intentar otra vez")
-                }
-            }
-        }
-
     }
 
 }
