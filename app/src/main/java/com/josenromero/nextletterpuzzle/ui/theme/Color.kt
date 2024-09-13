@@ -20,7 +20,7 @@ val light_onBackground = Color(0xFF001f2a)
 val light_surface = Color(0xFFfafcff)
 val light_onSurface = Color(0xFF001f2a)
 val light_outline = Color(0xFF6f797b)
-val light_surfaceVariant = Color(0xFFdbe4e7)
+val light_surfaceVariant = Color(0xFFffffff)
 val light_onSurfaceVariant = Color(0xFF3f484b)
 val light_scrim = Color(0xFF001f2a)
 
