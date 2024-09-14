@@ -3,6 +3,7 @@ package com.josenromero.nextletterpuzzle.ui.components
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,12 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,24 +49,18 @@ fun BottomSheet(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
-            HorizontalDivider(
-                Modifier.height(30.dp),
-                color = Color.Transparent
-            )
+            Spacer(modifier = Modifier.height(30.dp))
             SimpleText(text = "En cada nivel se te proporcionará un conjunto de letras y un tema.")
             SimpleText(text = "Tu objetivo es encontrar todas las palabras relacionadas con el tema utilizando las letras proporcionadas.")
-            HorizontalDivider(
-                Modifier.height(24.dp),
-                color = Color.Transparent
-            )
+            Spacer(modifier = Modifier.height(24.dp))
+
             SimpleText(text = "1. Haz clic en las letras para formar una palabra relacionada con el tema.")
             SimpleText(text = "2. Luego, presiona el botón 'Siguiente palabra' para guardar la palabra.")
             SimpleText(text = "3. Repite los pasos 1 y 2 para encontrar todas las palabras posibles en el nivel.")
             SimpleText(text = "4. Luego, presiona el botón 'Comprobar' para verificar tus respuestas.")
-            HorizontalDivider(
-                Modifier.height(24.dp),
-                color = Color.Transparent
-            )
+
+            ResultIndicatorsContainer()
+
             Button(onClick = closeBtn) {
                 SimpleText(
                     modifier = Modifier.fillMaxWidth(),
