@@ -84,4 +84,12 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    fun restartToLevel1(player: PlayerEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newValue = PlayerEntity(player.uid, player.name, 1, player.achievements)
+            updateOnePlayer(newValue)
+            getAllPlayers()
+        }
+    }
+
 }

@@ -70,6 +70,9 @@ fun AppNavigation() {
                 showHowToPlay = preferencesViewModel.showHowToPlay.value,
                 updateHowToPlay = { value ->
                     preferencesViewModel.setValueHowToPlay(value)
+                },
+                restartToLevel1 = { player ->
+                    gameViewModel.restartToLevel1(player)
                 }
             )
         }

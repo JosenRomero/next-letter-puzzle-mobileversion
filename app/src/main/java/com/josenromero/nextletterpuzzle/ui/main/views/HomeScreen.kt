@@ -49,10 +49,12 @@ fun HomeScreen(
     onNavigateToAScreen: (route: String) -> Unit,
     players: List<PlayerEntity>,
     showHowToPlay: Boolean?,
-    updateHowToPlay: (value: Boolean) -> Unit
+    updateHowToPlay: (value: Boolean) -> Unit,
+    restartToLevel1: (player: PlayerEntity) -> Unit
 ) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
+    var gameCompleted by remember { mutableStateOf(false) }
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
 
@@ -70,6 +72,15 @@ fun HomeScreen(
     if(showHowToPlay == false) {
         showBottomSheet = true
         updateHowToPlay(true)
+    }
+
+    if (players.isNotEmpty() && players[0].currentLevel > Constants.lastLevel) {
+        if (players[0].achievements.size < Constants.achievementsAboutLevel.size) {
+            // go to level 1 because there are missing achievements
+            restartToLevel1(players[0])
+        } else {
+            gameCompleted = true
+        }
     }
 
     Scaffold(
@@ -188,6 +199,15 @@ fun HomeScreen(
                         SimpleText(text = "Jugar")
                     }
 
+                    if (gameCompleted) {
+                        SimpleText(
+                            text = "Juego Completado!!!",
+                            modifier = Modifier.fillMaxWidth().padding(top = 15.dp),
+                            color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
                 }
                 if(showBottomSheet) {
                     BottomSheet(
@@ -210,7 +230,8 @@ fun HomeScreenPreview() {
             onNavigateToAScreen = {},
             players = emptyList(),
             showHowToPlay = false,
-            updateHowToPlay = {}
+            updateHowToPlay = {},
+            restartToLevel1 = {}
         )
     }
 }
