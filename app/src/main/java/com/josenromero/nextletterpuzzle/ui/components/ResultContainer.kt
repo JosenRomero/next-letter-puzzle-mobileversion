@@ -29,6 +29,7 @@ import com.josenromero.nextletterpuzzle.utils.Answer
 
 @Composable
 fun ResultContainer(
+    isLevelWithSecrets: Boolean,
     win: Boolean,
     arr: List<String>,
     onNavigateToHomeScreen: () -> Unit,
@@ -78,7 +79,12 @@ fun ResultContainer(
                             else painterResource(id = R.drawable.circle_x),
                             contentDescription = "result icon",
                             modifier = Modifier.size(24.dp),
-                            tint = if (item !== Answer.Wrong.character) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                            tint =
+                                when (item) {
+                                    Answer.Right.character -> MaterialTheme.colorScheme.primary
+                                    Answer.Valid.character -> if (isLevelWithSecrets) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primary
+                                    else -> MaterialTheme.colorScheme.error
+                                }
                         )
                     }
                 }
@@ -111,6 +117,7 @@ fun ResultContainer(
 fun WinContainerPreview() {
     NextLetterPuzzleTheme {
         ResultContainer(
+            isLevelWithSecrets = false,
             win = true,
             arr = arrayListOf("o", "x", "x"),
             onNavigateToHomeScreen = {},

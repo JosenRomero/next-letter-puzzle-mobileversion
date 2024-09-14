@@ -15,6 +15,8 @@ object Constants {
 
     val achievementsIDs_basic: List<String> = listOf("1", "2", "3")
 
+    val levels_with_secrets: List<Int> = listOf(9, 16, 18, 21)
+
     val achievementsAboutLevel: List<AchievementAboutLevel> = listOf(
         AchievementAboutLevel("1", R.drawable.achievement_easy, "Dificultad fácil", "Completa 7 niveles", 7+1),
         AchievementAboutLevel("2", R.drawable.achievement_normal, "Dificultad normal", "Completa 18 niveles", 18+1),

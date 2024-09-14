@@ -201,6 +201,7 @@ fun PlayScreen(
                         }
                         Spacer(modifier = Modifier.height(50.dp))
                         ResultContainer(
+                            isLevelWithSecrets = Constants.levels_with_secrets.contains(currentLevel),
                             win = !arrResult.contains(Answer.Wrong.character),
                             arr = arrResult,
                             onNavigateToHomeScreen = {
