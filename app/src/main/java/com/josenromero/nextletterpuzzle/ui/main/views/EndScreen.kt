@@ -58,7 +58,7 @@ fun EndScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SimpleText(
-                    text = "Congratulations!",
+                    text = "Felicidades!",
                     modifier = Modifier.graphicsLayer {
                         scaleX = textAnim
                         scaleY = textAnim
@@ -68,7 +68,7 @@ fun EndScreen(
                     style = LocalTextStyle.current.copy(textMotion = TextMotion.Animated)
                 )
                 SimpleText(
-                    text = "You have completed all levels",
+                    text = "Has completado todos los niveles.",
                     modifier = Modifier.fillMaxWidth().padding(top = 50.dp, bottom = 20.dp),
                     textAlign = TextAlign.Center
                 )
