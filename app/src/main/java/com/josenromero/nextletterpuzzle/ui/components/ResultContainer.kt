@@ -68,7 +68,9 @@ fun ResultContainer(
                 .padding(16.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
                 LazyRow() {
@@ -90,7 +92,9 @@ fun ResultContainer(
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp, bottom = 20.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = { onNavigateToHomeScreen() }) {
@@ -106,6 +110,13 @@ fun ResultContainer(
                     }
                 }
             }
+            SimpleText(
+                text = "Un anuncio se mostrará en un momento.",
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center
+            )
         }
     }
 

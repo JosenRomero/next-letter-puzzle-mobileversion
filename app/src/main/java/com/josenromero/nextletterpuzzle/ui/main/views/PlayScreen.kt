@@ -1,5 +1,6 @@
 package com.josenromero.nextletterpuzzle.ui.main.views
 
+import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +43,7 @@ import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
 import com.josenromero.nextletterpuzzle.ui.components.WordsList
+import com.josenromero.nextletterpuzzle.ui.main.Ads
 import com.josenromero.nextletterpuzzle.ui.main.navigation.AppScreens
 import com.josenromero.nextletterpuzzle.ui.theme.NextLetterPuzzleTheme
 import com.josenromero.nextletterpuzzle.utils.Answer
@@ -60,6 +63,7 @@ fun PlayScreen(
     saveAchievement: (player: PlayerEntity, achievementId: String) -> Unit
 ) {
 
+    val currentActivity = LocalContext.current as Activity
     var currentData: Item? = null
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
@@ -172,6 +176,7 @@ fun PlayScreen(
                                         lastLevelCompleteBtn(player)
                                     } else {
                                         isOpenDialog = true
+                                        Ads.displayInterstitialAd(currentActivity)
                                     }
                                 }
                             },
