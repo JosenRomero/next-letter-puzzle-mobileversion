@@ -39,6 +39,7 @@ import com.josenromero.nextletterpuzzle.ui.components.ButtonsContainer
 import com.josenromero.nextletterpuzzle.ui.components.IndicatorItem
 import com.josenromero.nextletterpuzzle.ui.components.ProgressIndicator
 import com.josenromero.nextletterpuzzle.ui.components.Loading
+import com.josenromero.nextletterpuzzle.ui.components.NotNetwork
 import com.josenromero.nextletterpuzzle.ui.components.ResultContainer
 import com.josenromero.nextletterpuzzle.ui.components.SimpleText
 import com.josenromero.nextletterpuzzle.ui.components.SimpleTopAppBar
@@ -50,6 +51,7 @@ import com.josenromero.nextletterpuzzle.utils.Answer
 import com.josenromero.nextletterpuzzle.utils.Constants
 import com.josenromero.nextletterpuzzle.utils.checkAchievementUnlocked
 import com.josenromero.nextletterpuzzle.utils.checkWords
+import com.josenromero.nextletterpuzzle.utils.isNetworkAvailable
 
 @Composable
 fun PlayScreen(
@@ -64,6 +66,7 @@ fun PlayScreen(
 ) {
 
     val currentActivity = LocalContext.current as Activity
+    val isInternet = isNetworkAvailable(LocalContext.current)
     var currentData: Item? = null
     val currentWord = remember { mutableStateOf("") }
     val words = remember { mutableStateListOf<String>() }
@@ -93,144 +96,148 @@ fun PlayScreen(
             },
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier.padding(start = 16.dp, top = 30.dp, end = 16.dp, bottom = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            if (isInternet) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    if (achievement != null && Constants.achievementsIDs_basic.contains(achievement.id)) {
-                        ShowAchievement(player, achievement.title, achievement.id, saveAchievement)
-                    }
-                    ProgressIndicator(
-                        number = currentProgressBar.value,
-                        totalWords = currentData.answer.size,
-                        currentWords = words.size
-                    )
-                    Row(
-                        modifier = Modifier.padding(vertical = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                    Column(
+                        modifier = Modifier.padding(start = 16.dp, top = 30.dp, end = 16.dp, bottom = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        IndicatorItem(text = "Tema")
+                        if (achievement != null && Constants.achievementsIDs_basic.contains(achievement.id)) {
+                            ShowAchievement(player, achievement.title, achievement.id, saveAchievement)
+                        }
+                        ProgressIndicator(
+                            number = currentProgressBar.value,
+                            totalWords = currentData.answer.size,
+                            currentWords = words.size
+                        )
+                        Row(
+                            modifier = Modifier.padding(vertical = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            IndicatorItem(text = "Tema")
+                            SimpleText(
+                                text = currentData.topic,
+                                modifier = Modifier.padding(start = 5.dp)
+                            )
+                        }
                         SimpleText(
-                            text = currentData.topic,
-                            modifier = Modifier.padding(start = 5.dp)
+                            text = currentWord.value,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center
                         )
-                    }
-                    SimpleText(
-                        text = currentWord.value,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    ButtonsContainer(
-                        letters = currentData.letters,
-                        onClick = { letter ->
-                            currentWord.value += letter
-                        }
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Button(
-                            onClick = {
-                                if (currentWord.value.isNotEmpty()) {
-                                    currentWord.value =
-                                        currentWord.value.substring(
-                                            0,
-                                            currentWord.value.length - 1
-                                        )
-                                }
-                            },
-                            enabled = currentWord.value.isNotEmpty(),
-                            shape = MaterialTheme.shapes.small,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.errorContainer,
-                                contentColor = MaterialTheme.colorScheme.error
-                            )
+                        ButtonsContainer(
+                            letters = currentData.letters,
+                            onClick = { letter ->
+                                currentWord.value += letter
+                            }
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp),
+                            horizontalArrangement = Arrangement.SpaceAround
                         ) {
-                            SimpleText(text = "Eliminar letra")
-                        }
-                        Button(
-                            onClick = {
-                                words.add(currentWord.value)
-                                currentWord.value = ""
-                                currentProgressBar.value =
-                                    (100 / currentData.answer.size) * words.size
-                                if (words.size == currentData.answer.size) {
-                                    val res: List<String> = checkWords(
-                                        currentData.answer,
-                                        currentData.validAnswer,
-                                        words
-                                    )
-                                    arrResult.addAll(res)
-                                    if (lastLevel && !arrResult.contains(Answer.Wrong.character)) {
-                                        endGame = true
-                                        lastLevelCompleteBtn(player)
-                                    } else {
-                                        isOpenDialog = true
-                                        Ads.displayInterstitialAd(currentActivity)
+                            Button(
+                                onClick = {
+                                    if (currentWord.value.isNotEmpty()) {
+                                        currentWord.value =
+                                            currentWord.value.substring(
+                                                0,
+                                                currentWord.value.length - 1
+                                            )
                                     }
+                                },
+                                enabled = currentWord.value.isNotEmpty(),
+                                shape = MaterialTheme.shapes.small,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                                    contentColor = MaterialTheme.colorScheme.error
+                                )
+                            ) {
+                                SimpleText(text = "Eliminar letra")
+                            }
+                            Button(
+                                onClick = {
+                                    words.add(currentWord.value)
+                                    currentWord.value = ""
+                                    currentProgressBar.value =
+                                        (100 / currentData.answer.size) * words.size
+                                    if (words.size == currentData.answer.size) {
+                                        val res: List<String> = checkWords(
+                                            currentData.answer,
+                                            currentData.validAnswer,
+                                            words
+                                        )
+                                        arrResult.addAll(res)
+                                        if (lastLevel && !arrResult.contains(Answer.Wrong.character)) {
+                                            endGame = true
+                                            lastLevelCompleteBtn(player)
+                                        } else {
+                                            isOpenDialog = true
+                                            Ads.displayInterstitialAd(currentActivity)
+                                        }
+                                    }
+                                },
+                                enabled = currentWord.value.isNotEmpty(),
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                if ((words.size + 1) < currentData.answer.size) {
+                                    SimpleText(text = "Siguiente palabra")
+                                } else {
+                                    SimpleText(text = "Comprobar")
                                 }
-                            },
-                            enabled = currentWord.value.isNotEmpty(),
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            if ((words.size + 1) < currentData.answer.size) {
-                                SimpleText(text = "Siguiente palabra")
-                            } else {
-                                SimpleText(text = "Comprobar")
                             }
                         }
-                    }
-                    WordsList(
-                        words = words
-                    )
-                }
-                if (isOpenDialog) {
-                    AnimatedTransitionDialog(onDismissRequest = { }) {
-                        if (achievement != null && !arrResult.contains(Answer.Wrong.character) && !arrResult.contains(Answer.Right.character)) {
-                            ShowAchievement(
-                                player = player,
-                                achievementTitle = achievement.title,
-                                achievementID = achievement.id,
-                                saveAchievement = saveAchievement
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(50.dp))
-                        ResultContainer(
-                            isLevelWithSecrets = Constants.levels_with_secrets.contains(currentLevel),
-                            win = !arrResult.contains(Answer.Wrong.character),
-                            arr = arrResult,
-                            onNavigateToHomeScreen = {
-                                isOpenDialog = false
-                                if (!arrResult.contains(Answer.Wrong.character)) {
-                                    nextLevelBtn(player)
-                                }
-                                onNavigateToAScreen(AppScreens.HomeScreen.route)
-                            },
-                            nextLevelBtn = {
-                                isOpenDialog = false
-                                nextLevelBtn(player)
-                                onNavigateToAScreen(AppScreens.PlayScreen.route)
-                            },
-                            tryAgainBtn = {
-                                isOpenDialog = false
-                                currentWord.value = ""
-                                words.clear()
-                                arrResult.clear()
-                                currentProgressBar.value = initialProgressBar
-                            }
+                        WordsList(
+                            words = words
                         )
                     }
+                    if (isOpenDialog) {
+                        AnimatedTransitionDialog(onDismissRequest = { }) {
+                            if (achievement != null && !arrResult.contains(Answer.Wrong.character) && !arrResult.contains(Answer.Right.character)) {
+                                ShowAchievement(
+                                    player = player,
+                                    achievementTitle = achievement.title,
+                                    achievementID = achievement.id,
+                                    saveAchievement = saveAchievement
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(50.dp))
+                            ResultContainer(
+                                isLevelWithSecrets = Constants.levels_with_secrets.contains(currentLevel),
+                                win = !arrResult.contains(Answer.Wrong.character),
+                                arr = arrResult,
+                                onNavigateToHomeScreen = {
+                                    isOpenDialog = false
+                                    if (!arrResult.contains(Answer.Wrong.character)) {
+                                        nextLevelBtn(player)
+                                    }
+                                    onNavigateToAScreen(AppScreens.HomeScreen.route)
+                                },
+                                nextLevelBtn = {
+                                    isOpenDialog = false
+                                    nextLevelBtn(player)
+                                    onNavigateToAScreen(AppScreens.PlayScreen.route)
+                                },
+                                tryAgainBtn = {
+                                    isOpenDialog = false
+                                    currentWord.value = ""
+                                    words.clear()
+                                    arrResult.clear()
+                                    currentProgressBar.value = initialProgressBar
+                                }
+                            )
+                        }
+                    }
                 }
+            } else {
+                NotNetwork()
             }
         }
     } else {
