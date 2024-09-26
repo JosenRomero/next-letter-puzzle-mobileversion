@@ -27,6 +27,8 @@ object Constants {
         AchievementAboutLevel("7", R.drawable.achievement_chemistry_lvl21, "Secretos. Dificultad difícil", "Encuentra todas las respuestas secretas del nivel 21", 21)
     )
 
+    const val init_ads_in_level = 4
+
     var playerFake = PlayerEntity(0, "Jose Romero", 1, emptyList())
 
     var dataFake: List<Item> = listOf(

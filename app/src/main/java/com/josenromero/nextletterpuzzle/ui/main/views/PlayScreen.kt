@@ -180,7 +180,9 @@ fun PlayScreen(
                                             lastLevelCompleteBtn(player)
                                         } else {
                                             isOpenDialog = true
-                                            Ads.displayInterstitialAd(currentActivity)
+                                            if (currentLevel >= Constants.init_ads_in_level) {
+                                                Ads.displayInterstitialAd(currentActivity)
+                                            }
                                         }
                                     }
                                 },
@@ -213,6 +215,7 @@ fun PlayScreen(
                                 isLevelWithSecrets = Constants.levels_with_secrets.contains(currentLevel),
                                 win = !arrResult.contains(Answer.Wrong.character),
                                 arr = arrResult,
+                                isAds = currentLevel >= Constants.init_ads_in_level,
                                 onNavigateToHomeScreen = {
                                     isOpenDialog = false
                                     if (!arrResult.contains(Answer.Wrong.character)) {

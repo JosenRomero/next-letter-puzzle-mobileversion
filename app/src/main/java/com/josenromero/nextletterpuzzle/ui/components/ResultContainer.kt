@@ -32,6 +32,7 @@ fun ResultContainer(
     isLevelWithSecrets: Boolean,
     win: Boolean,
     arr: List<String>,
+    isAds: Boolean,
     onNavigateToHomeScreen: () -> Unit,
     nextLevelBtn: () -> Unit,
     tryAgainBtn: () -> Unit
@@ -110,13 +111,15 @@ fun ResultContainer(
                     }
                 }
             }
-            SimpleText(
-                text = "Un anuncio se mostrará en un momento.",
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.error,
-                fontSize = 12.sp,
-                textAlign = TextAlign.Center
-            )
+            if (isAds) {
+                SimpleText(
+                    text = "Un anuncio se mostrará en un momento.",
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.error,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 
@@ -131,6 +134,7 @@ fun WinContainerPreview() {
             isLevelWithSecrets = false,
             win = true,
             arr = arrayListOf("o", "x", "x"),
+            isAds = false,
             onNavigateToHomeScreen = {},
             nextLevelBtn = {},
             tryAgainBtn = {}
